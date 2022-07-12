@@ -1,4 +1,4 @@
 export default  {
-    getProduct: state => state.product,
+    getProducts: state => state.products,
     getStock: state => state.stock
 }

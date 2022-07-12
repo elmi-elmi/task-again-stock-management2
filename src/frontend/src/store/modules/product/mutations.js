@@ -5,19 +5,21 @@ export default {
     /*
      *  requested product save in the `state.product`
      */
-    SET_PRODUCT(state, product) {
-        state.product = product
+    ADD_PRODUCT(state, product) {
+        state.products.unshift(product)
     },
 
     /*
      *  update amount of stock in the `state.product`
      */
     REFILL_PRODUCT(state, product) {
-        state.product = product
+        const index = state.products.findIndex(p=>p.id === product.id)
+        state.products[index] = product
     },
 
     DECREASE_PRODUCT(state, product) {
-        state.product = product
+        const index = state.products.findIndex(p=>p.id === product.id)
+        state.products[index] = product
     },
 
     DELETE_PRODUCT(state) {

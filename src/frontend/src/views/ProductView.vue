@@ -136,11 +136,11 @@ export default {
       const requestToStore = this.$route.name === 'product'
           ? 'product/fetchProductById'
           : 'product/fetchStockById'
-
+      console.log(this.id, requestToStore)
       this.$store.dispatch(requestToStore, this.id)
           .then(() => {
             this.id = null;
-            this.products.unshift(this.$store.getters['product/getProduct'])
+            this.products = this.$store.getters['product/getProducts']
           }) // if request has been done successfully  the value in input clear
           .catch((e) => {
             // Todo -- Check Error status
@@ -160,7 +160,7 @@ export default {
 
       // get id
       const id = this.$route.name === 'product'
-          ? this.$store.getters['product/getProduct'].id
+          ? this.$store.getters['product/getProducts'].id
           : this.$store.getters['product/getStock'].id
       console.log('here')
 

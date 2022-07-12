@@ -7,7 +7,7 @@ import getters from "@/store/modules/product/getters";
 export default {
     namespaced: true,
     state: {
-        product: {},
+        products: [],
         stock: {}
     },
     mutations,
