@@ -1,13 +1,11 @@
 <template>
   <div class="product">
     <v-container
-
     >
       <v-text-field
           background-color="grey lighten-3"
           rounded
           label="Search Product"
-
       >
 
         <v-icon
@@ -36,6 +34,7 @@
       >
         <v-col
             v-for="product in products"
+            :key="product.id"
             sm="6"
             md="6"
             lg='4'
@@ -47,9 +46,11 @@
             max-width="500"
             min-width="300"
           >
+            <v-btn fab small text class="closeButton">
+              <v-icon  small >mdi-delete-outline</v-icon>
+            </v-btn>
             <v-card-title class="primary--text">{{ product.name }}</v-card-title>
             <v-card-text>{{ product.stock }}</v-card-text>
-            <v-chip>{{ product.id }}</v-chip>
             <v-row
               justify="center"
             >
@@ -102,5 +103,9 @@ export default {
 </script>
 
 <style scoped>
-
+.closeButton{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 </style>
