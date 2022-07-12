@@ -1,16 +1,27 @@
 <template>
   <div class="product">
-    <v-container
+    <v-card
+        class="pa-0 ma-4"
+        :flat="!isFocus"
+        rounded
     >
       <v-text-field
-          background-color="grey lighten-3"
+          height="40"
+          :background-color="backgroundInput"
           rounded
           label="Search Product"
+          @focus="focusOnTextField"
+          @focusout="unfocusOnTextField"
+          hide-details
+          class="pa-0"
+
+
+
       >
 
         <v-icon
             slot="prepend-inner"
-            color="primary"
+            :color="`${isFocus?'teal':'grey'}`"
         >
           mdi-magnify
         </v-icon>
@@ -18,12 +29,12 @@
             @click="showProducts = !showProducts"
 
             slot="append"
-            color="red"
+            :color="`${isFocus?'success':'grey'}`"
         >
           mdi-plus
         </v-icon>
       </v-text-field>
-    </v-container>
+    </v-card>
 
     <v-container
         v-if="showProducts"
@@ -82,6 +93,7 @@ export default {
   data() {
     return {
       showProducts: true,
+      isFocus:false,
       products: [
         {id: 1, name: 'gorme', stock: '121'},
         {id: 2, name: 'gorme', stock: '121'},
@@ -90,13 +102,21 @@ export default {
         {id: 5, name: 'gorme', stock: '121'},
         {id: 6, name: 'gorme', stock: '121'},
         {id: 7, name: 'gorme', stock: '121'},
-      ]
+      ],
+      backgroundInput:'grey lighten-3'
+
     }
   },
   methods: {
-    show() {
-      console.log('who')
+    focusOnTextField(){
+      this.isFocus = true,
+      this.backgroundInput = 'white'
+    },
+    unfocusOnTextField(){
+      this.isFocus=false
+      this.backgroundInput = 'grey lighten-3'
     }
+
   }
 
 }
@@ -108,4 +128,6 @@ export default {
   top: 0;
   right: 0;
 }
+
+
 </style>
