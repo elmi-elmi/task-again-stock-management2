@@ -4,21 +4,11 @@
     <Navbar/>
 
     <v-main>
-      <v-container
-          class="py-8 px-6"
-          fluid
-      >
-        <v-row>
-          <v-col
-              cols="12"
-          >
-            <v-card>
-              <router-view></router-view>
-            </v-card>
-          </v-col>
-        </v-row>
 
-      </v-container>
+
+              <router-view></router-view>
+
+
     </v-main>
   </v-app>
 </template>
