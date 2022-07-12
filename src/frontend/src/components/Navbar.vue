@@ -3,7 +3,7 @@
   <v-navigation-drawer
       v-model="drawer"
       app
-
+      color="primary lighten-1"
 
 
   >
@@ -11,15 +11,15 @@
       <v-list-item
           v-for="item in items"
           :key="item.title"
-          link
-
+          :to="{name:item.to.name}"
+          exact-active-class="primary lighten-4"
       >
         <v-list-item-icon  >
-          <v-icon  >{{ item.icon }}</v-icon>
+          <v-icon class="white--text" >{{ item.icon }}</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title >{{ item.title }}</v-list-item-title>
+          <v-list-item-title class="white--text">{{ item.title }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -36,14 +36,15 @@
 
   <v-app-bar
       app
-      color=""
+      color="primary"
+      dark
       flat
   >
     <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
     <v-toolbar-title dark>
-      <span  class="text-uppercase primary--text" >Stock</span>
-      <span class="  text-uppercase">management</span>
+      <span  class="text-uppercase teal text-overline pa-1 " >Stock</span>
+      <span class="  text-uppercase text-overline orange pa-1">management</span>
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
@@ -63,11 +64,11 @@
 export default {
   name: "Navbar",
   data(){return{
-    drawer: true,
+    drawer: false,
     items: [
-      { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-      { title: 'Account', icon: 'mdi-account-box' },
-      { title: 'Admin', icon: 'mdi-gavel' },
+      { title: 'Product', icon: 'mdi-view-dashboard',to:{name:'product',path:'/'} },
+      { title: 'Stock', icon: 'mdi-account-box', to:{name:'stock',path:'/'} },
+      { title: 'Report', icon: 'mdi-gavel',to:{name:'report',path:'/report'} },
     ],
   }}
 }
