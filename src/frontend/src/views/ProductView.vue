@@ -1,20 +1,19 @@
 <template>
   <div class="product">
     <v-card
-        class="pa-0 ma-4"
+        class="pa-0 ma-4 mx-auto"
         :flat="!isFocus"
         rounded
+        max-width="500"
     >
       <v-text-field
-          height="40"
           :background-color="backgroundInput"
           rounded
           label="Search Product"
           @focus="focusOnTextField"
-          @focusout="unfocusOnTextField"
+          @focusout="unFocusOnTextField"
           hide-details
-          class="pa-0"
-
+          v-model="id"
 
 
       >
@@ -26,8 +25,7 @@
           mdi-magnify
         </v-icon>
         <v-icon
-            @click="showProducts = !showProducts"
-
+            @click="sendRequest"
             slot="append"
             :color="`${isFocus?'success':'grey'}`"
         >
@@ -65,14 +63,34 @@
             <v-row
               justify="center"
             >
+              <v-container>
+                <v-card
+                max-width="200"
+                class="mx-auto"
+                rounded
+                flat
+                >
+                <v-text-field
+                    class="pa-0"
+                    background-color="grey lighten-5"
+                    label="amount"
+                    hide-details
+                    v-model="amount"
+                ></v-text-field>
+
+                </v-card>
+
+              </v-container>
             <v-card-actions>
               <v-btn
+                  @click="changeStockValue('refill')"
                   small>
                 <v-icon left color="success">mdi-plus</v-icon>
               </v-btn>
             </v-card-actions>
             <v-card-actions>
               <v-btn
+                  @click="changeStockValue('decrease')"
                   small>
                 <v-icon left color="warning">mdi-minus</v-icon>
               </v-btn>
@@ -95,15 +113,11 @@ export default {
       showProducts: true,
       isFocus:false,
       products: [
-        {id: 1, name: 'gorme', stock: '121'},
-        {id: 2, name: 'gorme', stock: '121'},
-        {id: 3, name: 'gorme', stock: '121'},
-        {id: 4, name: 'gorme', stock: '121'},
-        {id: 5, name: 'gorme', stock: '121'},
-        {id: 6, name: 'gorme', stock: '121'},
-        {id: 7, name: 'gorme', stock: '121'},
+
       ],
-      backgroundInput:'grey lighten-3'
+      backgroundInput:'grey lighten-3',
+      id:null,
+      amount:null,
 
     }
   },
@@ -112,10 +126,58 @@ export default {
       this.isFocus = true,
       this.backgroundInput = 'white'
     },
-    unfocusOnTextField(){
+    unFocusOnTextField(){
       this.isFocus=false
       this.backgroundInput = 'grey lighten-3'
-    }
+    },
+
+    sendRequest() {
+      // which apis has been called -- product/:id or :id/stock
+      const requestToStore = this.$route.name === 'product'
+          ? 'product/fetchProductById'
+          : 'product/fetchStockById'
+
+      this.$store.dispatch(requestToStore, this.id)
+          .then(() => {
+            this.id = null;
+            this.products.unshift(this.$store.getters['product/getProduct'])
+          }) // if request has been done successfully  the value in input clear
+          .catch((e) => {
+            // Todo -- Check Error status
+            let name = '404Resource'
+            if (e.code === "ERR_NETWORK") name = 'networkError'
+
+            this.$router.push({name, params: {message: e.message, res: e.response.data}})
+          })
+
+    },
+
+    changeStockValue(req) {
+      // select which apis should be sent
+      const requestToStore = req === 'refill'
+          ? 'product/addStockAmount'
+          : 'product/decreaseStockAmount'
+
+      // get id
+      const id = this.$route.name === 'product'
+          ? this.$store.getters['product/getProduct'].id
+          : this.$store.getters['product/getStock'].id
+      console.log('here')
+
+      console.log(id)
+      // send request to store
+      this.$store.dispatch(requestToStore, {name: this.$route.name, id, amount: this.amount})
+          .then(() => this.amount = null) // clear input
+          .catch((e) => {
+            // Todo -- check status error
+            let name = '404Resource'
+            // const status = e.response.status
+
+            if (e.code === "ERR_NETWORK") name = 'networkError'
+            this.$router.push({name,params:{message:e.message, res:e.response.data}})
+          })
+
+    },
 
   }
 
