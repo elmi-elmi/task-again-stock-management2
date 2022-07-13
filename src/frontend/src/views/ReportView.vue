@@ -6,7 +6,7 @@
         <v-list
             justify="center"
             align-content="center"
-            :class="`pa-2`" v-for="report in report"
+            :class="`pa-2 `" v-for="report in report"
             :key="Date.now()"
         >
           <v-row
@@ -24,8 +24,8 @@
             <div class="grey--text">stock</div>
             <div>{{ report.stock }} </div>
           </v-col>
-          <v-col  sm="2" class="justify-end" >
-            <v-chip  :class="`mt-2  white--text caption ${report.status}`">{{report.amount}}</v-chip>
+          <v-col  sm="2" class="d-flex justify-end" >
+            <v-chip label  :class="`mt-2  white--text caption ${report.status}`">{{report.amount}}</v-chip>
           </v-col>
           </v-row>
 

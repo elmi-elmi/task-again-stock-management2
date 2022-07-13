@@ -24,16 +24,20 @@ export default {
         state.products[index] = product
     },
 
-    DELETE_PRODUCT(state) {
-        state.product = {}
-
-    },
-
     DELETE_PRODUCT_BY_INDEX(state,index){
         state.products = state.products.filter((p,i)=> i !== index)
         localStorage.setItem('products', JSON.stringify(state.products))
 
     },
+
+
+    DELETE_PRODUCT(state) {
+        state.product = {}
+
+    },
+
+
+
 
     /*=======================================================
                              STOCK

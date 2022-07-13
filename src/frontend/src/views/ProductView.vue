@@ -163,10 +163,13 @@ export default {
             this.id = null;
           }) // if request has been done successfully  the value in input clear
           .catch((e) => {
+            // Todo
+            console.log(e)
+
             // Todo -- Check Error status
-            let name = '404Resource'
-            if (e.code === "ERR_NETWORK") name = 'networkError'
-            this.$router.push({name, params: {message: e.message, res: e.response.data}})
+            // let name = '404Resource'
+            // if (e.code === "ERR_NETWORK") name = 'networkError'
+            // this.$router.push({name, params: {message: e.message, res: e.response.data}})
           })
 
     },
@@ -185,12 +188,14 @@ export default {
 
             }) // clear input
           .catch((e) => {
-            // Todo -- check status error
-            let name = '404Resource'
-            // const status = e.response.status
-
-            if (e.code === "ERR_NETWORK") name = 'networkError'
-            this.$router.push({name,params:{message:e.message, res:e.response.data}})
+            // Todo
+            console.log(e)
+            // let name = '404Resource'
+            // // const status = e.response.status
+            //
+            // Todo -- Check Error status
+            // if (e.code === "ERR_NETWORK") name = 'networkError'
+            // this.$router.push({name,params:{message:e.message, res:e.response.data}})
           })
 
     },
