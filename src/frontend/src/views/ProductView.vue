@@ -75,7 +75,7 @@
                     background-color="grey lighten-5"
                     label="amount"
                     hide-details
-                    @input="handel($event, product.id, index)"
+                    v-model='amount'
                 ></v-text-field>
 
                 </v-card>
@@ -96,7 +96,6 @@
               </v-btn>
             </v-card-actions>
             </v-row>
-
           </v-card>
         </v-col>
       </v-row>
@@ -112,19 +111,14 @@ export default {
     return {
       showProducts: true,
       isFocus:false,
-      products: [
-
-      ],
+      products: [],
       backgroundInput:'grey lighten-3',
       id:null,
       amount:null,
-
     }
   },
   methods: {
-    handel(e,id, index){
-      console.log(e, id, index)
-    },
+    
     focusOnTextField(){
       this.isFocus = true,
       this.backgroundInput = 'white'
@@ -139,7 +133,7 @@ export default {
       const requestToStore = this.$route.name === 'product'
           ? 'product/fetchProductById'
           : 'product/fetchStockById'
-      console.log(this.id, requestToStore)
+
       this.$store.dispatch(requestToStore, this.id)
           .then(() => {
             this.id = null;
@@ -149,7 +143,6 @@ export default {
             // Todo -- Check Error status
             let name = '404Resource'
             if (e.code === "ERR_NETWORK") name = 'networkError'
-
             this.$router.push({name, params: {message: e.message, res: e.response.data}})
           })
 
@@ -162,12 +155,17 @@ export default {
           : 'product/decreaseStockAmount'
 
       // get id
-   
+      
+      
 
-      console.log(id)
       // send request to store
       this.$store.dispatch(requestToStore, {name: this.$route.name, id, amount: this.amount})
-          .then(() => this.amount = null) // clear input
+          .then(() => {
+            this.amount = null
+            this.products = this.$store.getters['product/getProducts']
+            console.log(this.products)
+
+            }) // clear input
           .catch((e) => {
             // Todo -- check status error
             let name = '404Resource'
