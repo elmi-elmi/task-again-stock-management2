@@ -14,6 +14,7 @@
           @focusout="unFocusOnTextField"
           hide-details
           v-model="id"
+          @keyup.en.enter="sendRequest(id)"
 
 
       >
@@ -35,7 +36,7 @@
     </v-card>
 
     <v-container
-        v-if="showProducts"
+        v-if="products.length"
 
     >
       <v-row
@@ -102,6 +103,12 @@
         </v-col>
       </v-row>
     </v-container>
+    <div class="display-1 productFallback grey--text text-center" v-else>
+      <v-icon x-large>mdi-magnify</v-icon>
+      <div>Search Products</div>
+
+    </div>
+
   </div>
 
 </template>
@@ -111,7 +118,7 @@ export default {
   name: "ProductView",
   data() {
     return {
-      showProducts: true,
+
       isFocus:false,
       backgroundInput:'grey lighten-3',
       id:null,
@@ -168,7 +175,6 @@ export default {
           .then(() => {
             this.amount = null
 
-            console.log(this.products)
 
             }) // clear input
           .catch((e) => {
@@ -198,6 +204,11 @@ export default {
   top: 0;
   right: 0;
 }
-
+.productFallback{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform:translate(-50%,-50%)
+}
 
 </style>

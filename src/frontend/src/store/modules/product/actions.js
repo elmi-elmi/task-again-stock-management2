@@ -30,10 +30,9 @@ export default {
         // IF GETTING REQUEST FROM PRODUCT ROUTE
         if (name === 'product') return ProductService.putRefillProduct(id,amount)
             .then(({data}) => {
-                console.log('action product', amount, data)
 
                 context.commit('REFILL_PRODUCT', data)
-                context.dispatch('report/addReport', {amount, ...data},{root:true})
+                context.dispatch('report/addReport', {amount, ...data,status:'refill'},{root:true})
             })
 
         // IF GETTING REQUEST FROM STOCK ROUTE
@@ -46,14 +45,20 @@ export default {
      *  PUT request --> to decrease amount of a stock
      */
     // Todo -- Change to 2 separate functions
-    decreaseStockAmount({commit}, {name,id,amount}) {
+    decreaseStockAmount(context, {name,id,amount}) {
         // IF GETTING REQUEST FROM PRODUCT ROUTE
+
         if (name === 'product') return ProductService.putDecreaseProduct(id, amount)
-            .then(({data}) => commit('DECREASE_PRODUCT', data))
+            .then(({data}) => {
+                context.commit('DECREASE_PRODUCT', data)
+                context.dispatch('report/addReport', {amount, ...data,status:'decrease'},{root:true})
+
+            })
 
         // IF GETTING REQUEST  FROM STOCK ROUTE
         return ProductService.putDecreaseProduct(id, amount)
             .then(({data}) => commit('DECREASE_STOCK', data))
+
     },
     deleteProductByIndex({commit},index){
      commit('DELETE_PRODUCT_BY_INDEX',index)

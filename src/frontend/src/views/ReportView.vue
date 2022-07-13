@@ -1,12 +1,17 @@
 <template>
   <div class="report">
-    <v-container  >
-      <v-card  tile class="pa-4"  max-width="600" >
-        <v-row
+      <h1 class="subtitle-1 pa-4 grey--text">Report</h1>
+    <v-container class="my-5 pa-4" v-if="report.length" >
+      <v-card  tile class="pa-4 mx-auto"    >
+        <v-list
+            justify="center"
             align-content="center"
-            class="reportBorder pa-2" v-for="report in report"
+            :class="`pa-2`" v-for="report in report"
         >
-          <v-col class="" sm="1" >
+          <v-row
+              :class="`report ${report.status}`"
+          >
+          <v-col class="" sm="2" >
             <div class="grey--text">ID</div>
             <div>{{ report.id }}</div>
           </v-col>
@@ -16,17 +21,19 @@
           </v-col>
           <v-col  sm="2">
             <div class="grey--text">stock</div>
-            <div>{{ report.stock }}</div>
+            <div>{{ report.stock }} </div>
           </v-col>
-          <v-col  sm="3">
-            <v-chip :class="`mt-2  white--text caption `">{{report.amount}}</v-chip>
+          <v-col  sm="2" class="justify-end" >
+            <v-chip  :class="`mt-2  white--text caption ${report.status}`">{{report.amount}}</v-chip>
           </v-col>
+          </v-row>
 
 
-          <v-divider class="pa-1" ></v-divider>
-        </v-row>
+          <v-divider class="" ></v-divider>
+        </v-list>
       </v-card>
     </v-container>
+    <h1 class="display-1 reportFallback grey--text" v-else>No record</h1>
   </div>
 </template>
 
@@ -45,5 +52,26 @@ export default {
 <style scoped>
 .reportBorder {
   border-left: 4px solid orange;
+}
+.v-chip.refill{
+  background: green;
+}
+.v-chip.decrease{
+  background: tomato;
+}
+
+.report.refill{
+  border-left: 4px solid green;
+
+}
+.report.decrease{
+  border-left: 4px solid tomato;
+
+}
+.reportFallback{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform:translate(-50%,-50%)
 }
 </style>
