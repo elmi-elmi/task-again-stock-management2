@@ -55,7 +55,9 @@
             max-width="500"
             min-width="300"
           >
-            <v-btn fab small text class="closeButton">
+            <v-btn 
+            @click="deleteShowedResult(index)"
+            fab small text class="closeButton">
               <v-icon  small >mdi-delete-outline</v-icon>
             </v-btn>
             <v-card-title class="primary--text">{{ product.name }}</v-card-title>
@@ -176,8 +178,13 @@ export default {
           })
 
     },
-
+    deleteShowedResult(index){
+      //
+      this.$store.dispatch('product/deleteProductByIndex', index)
+      this.products = this.$store.getters['product/getProducts']
+    }
   }
+
 
 }
 </script>

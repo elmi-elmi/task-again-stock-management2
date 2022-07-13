@@ -26,6 +26,10 @@ export default {
         state.product = {}
     },
 
+    DELETE_PRODUCT_BY_INDEX(state,index){
+        state.products = state.products.filter((p,i)=> i !== index)
+    },
+
     /*=======================================================
                              STOCK
       ======================================================= */

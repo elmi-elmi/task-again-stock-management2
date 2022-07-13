@@ -49,6 +49,9 @@ export default {
         // IF GETTING REQUEST  FROM STOCK ROUTE
         return ProductService.putDecreaseProduct(id, amount)
             .then(({data}) => commit('DECREASE_STOCK', data))
+    },
+    deleteProductByIndex({commit},index){
+     commit('DELETE_PRODUCT_BY_INDEX',index)
     }
 
 }
