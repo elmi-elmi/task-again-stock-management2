@@ -26,10 +26,15 @@ export default {
      *  PUT request --> to increase amount of a stock
      */
     // Todo -- Change to 2 separate functions
-    addStockAmount({commit}, {name,id,amount}) {
+    addStockAmount(context, {name,id,amount}) {
         // IF GETTING REQUEST FROM PRODUCT ROUTE
         if (name === 'product') return ProductService.putRefillProduct(id,amount)
-            .then(({data}) => commit('REFILL_PRODUCT', data))
+            .then(({data}) => {
+                console.log('action product', amount, data)
+
+                context.commit('REFILL_PRODUCT', data)
+                context.dispatch('report/addReport', {amount, ...data},{root:true})
+            })
 
         // IF GETTING REQUEST FROM STOCK ROUTE
         return ProductService.putRefillProduct(id, amount)

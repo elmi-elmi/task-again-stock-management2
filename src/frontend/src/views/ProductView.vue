@@ -55,7 +55,7 @@
             max-width="500"
             min-width="300"
           >
-            <v-btn 
+            <v-btn
             @click="deleteShowedResult(index)"
             fab small text class="closeButton">
               <v-icon  small >mdi-delete-outline</v-icon>
@@ -113,14 +113,18 @@ export default {
     return {
       showProducts: true,
       isFocus:false,
-      products: [],
       backgroundInput:'grey lighten-3',
       id:null,
       amount:null,
     }
   },
+  computed:{
+    products(){
+      return this.$store.getters['product/getProducts']
+    }
+  },
   methods: {
-    
+
     focusOnTextField(){
       this.isFocus = true,
       this.backgroundInput = 'white'
@@ -139,7 +143,6 @@ export default {
       this.$store.dispatch(requestToStore, this.id)
           .then(() => {
             this.id = null;
-            this.products = this.$store.getters['product/getProducts']
           }) // if request has been done successfully  the value in input clear
           .catch((e) => {
             // Todo -- Check Error status
@@ -157,14 +160,14 @@ export default {
           : 'product/decreaseStockAmount'
 
       // get id
-      
-      
+
+
 
       // send request to store
       this.$store.dispatch(requestToStore, {name: this.$route.name, id, amount: this.amount})
           .then(() => {
             this.amount = null
-            this.products = this.$store.getters['product/getProducts']
+
             console.log(this.products)
 
             }) // clear input
