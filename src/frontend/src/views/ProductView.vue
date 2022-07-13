@@ -42,7 +42,7 @@
           class="mb-2"
       >
         <v-col
-            v-for="product in products"
+            v-for="(product,index) in products"
             :key="product.id"
             sm="6"
             md="6"
@@ -75,7 +75,7 @@
                     background-color="grey lighten-5"
                     label="amount"
                     hide-details
-                    v-model="amount"
+                    @input="handel($event, product.id, index)"
                 ></v-text-field>
 
                 </v-card>
@@ -83,14 +83,14 @@
               </v-container>
             <v-card-actions>
               <v-btn
-                  @click="changeStockValue('refill')"
+                  @click="changeStockValue('refill',product.id)"
                   small>
                 <v-icon left color="success">mdi-plus</v-icon>
               </v-btn>
             </v-card-actions>
             <v-card-actions>
               <v-btn
-                  @click="changeStockValue('decrease')"
+                  @click="changeStockValue('decrease', product.id)"
                   small>
                 <v-icon left color="warning">mdi-minus</v-icon>
               </v-btn>
@@ -122,6 +122,9 @@ export default {
     }
   },
   methods: {
+    handel(e,id, index){
+      console.log(e, id, index)
+    },
     focusOnTextField(){
       this.isFocus = true,
       this.backgroundInput = 'white'
@@ -152,17 +155,14 @@ export default {
 
     },
 
-    changeStockValue(req) {
+    changeStockValue(req, id) {
       // select which apis should be sent
       const requestToStore = req === 'refill'
           ? 'product/addStockAmount'
           : 'product/decreaseStockAmount'
 
       // get id
-      const id = this.$route.name === 'product'
-          ? this.$store.getters['product/getProducts'].id
-          : this.$store.getters['product/getStock'].id
-      console.log('here')
+   
 
       console.log(id)
       // send request to store
