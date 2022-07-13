@@ -103,8 +103,8 @@
         </v-col>
       </v-row>
     </v-container>
-    <div @click="focusOnTextField" class="display-1 productFallback grey--text text-center" v-else>
-      <v-icon class="teal--text" x-large>mdi-magnify</v-icon>
+    <div @click="focusOnTextField" class="productFallback text-overline grey--text text-center" v-else>
+      <v-icon class="teal--text" large>mdi-magnify</v-icon>
       <div>Search Products</div>
 
     </div>
@@ -147,11 +147,7 @@ export default {
     sendRequest() {
       // which apis has been called -- product/:id or :id/stock
         let ind = this.products?.findIndex(p=>p.id === this.id)
-        console.log('****', ind)
-        if(ind>=0){
-          console.log('****', ind)
-          this.deleteShowedResult(ind)
-        }
+        if(ind>=0) this.deleteShowedResult(ind)
 
       const requestToStore = this.$route.name === 'product'
           ? 'product/fetchProductById'
@@ -176,10 +172,6 @@ export default {
       const requestToStore = req === 'refill'
           ? 'product/addStockAmount'
           : 'product/decreaseStockAmount'
-
-      // get id
-
-
 
       // send request to store
       this.$store.dispatch(requestToStore, {name: this.$route.name, id, amount: this.amount})

@@ -1,6 +1,6 @@
 <template>
   <div class="report">
-      <h1 class="subtitle-1 pa-4 grey--text">Report</h1>
+      <h1 class="subtitle-1 pa-4 grey--text">Reports</h1>
     <v-container class="my-5 pa-4" v-if="report.length" >
       <v-card  tile class="pa-4 mx-auto"    >
         <v-list
