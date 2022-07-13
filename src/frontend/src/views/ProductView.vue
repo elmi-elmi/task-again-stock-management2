@@ -74,6 +74,7 @@
                 flat
                 >
                 <v-text-field
+                    type="number"
                     class="pa-0"
                     background-color="grey lighten-5"
                     label="amount"
@@ -86,6 +87,7 @@
               </v-container>
             <v-card-actions>
               <v-btn
+                  :disabled="!amount"
                   @click="changeStockValue('refill',product.id)"
                   small>
                 <v-icon left color="success">mdi-plus</v-icon>
@@ -93,6 +95,7 @@
             </v-card-actions>
             <v-card-actions>
               <v-btn
+                  :disabled="!amount"
                   @click="changeStockValue('decrease', product.id)"
                   small>
                 <v-icon left color="warning">mdi-minus</v-icon>
@@ -156,6 +159,7 @@ export default {
 
       this.$store.dispatch(requestToStore, this.id)
           .then(() => {
+            console.log('here')
             this.id = null;
           }) // if request has been done successfully  the value in input clear
           .catch((e) => {

@@ -7,6 +7,8 @@ export default {
      */
     ADD_PRODUCT(state, product) {
         state.products.unshift(product)
+        localStorage.setItem('products', JSON.stringify(state.products))
+
     },
 
     /*
@@ -24,10 +26,13 @@ export default {
 
     DELETE_PRODUCT(state) {
         state.product = {}
+
     },
 
     DELETE_PRODUCT_BY_INDEX(state,index){
         state.products = state.products.filter((p,i)=> i !== index)
+        localStorage.setItem('products', JSON.stringify(state.products))
+
     },
 
     /*=======================================================

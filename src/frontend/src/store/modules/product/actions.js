@@ -9,7 +9,10 @@ export default {
      */
     fetchProductById({commit}, productId) {
         return ProductService.getProductById(productId)
-            .then(({data}) => commit('ADD_PRODUCT', data))
+            .then(({data}) => {
+                commit('ADD_PRODUCT', data)
+                console.log('acccccc')
+            })
     },
 
 

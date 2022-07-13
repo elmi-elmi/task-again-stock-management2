@@ -7,6 +7,7 @@
             justify="center"
             align-content="center"
             :class="`pa-2`" v-for="report in report"
+            :key="Date.now()"
         >
           <v-row
               :class="`report ${report.status}`"
@@ -42,9 +43,13 @@ export default {
   name: "ReportView",
   computed: {
     report() {
-      console.log('--->',this.$store.getters['report/getReports'])
       return this.$store.getters['report/getReports']
     }
+  },
+  mounted(){
+    console.log('mounted-----------')
+    console.log('--->',this.$store.getters['report/getReports'])
+
   }
 }
 </script>
