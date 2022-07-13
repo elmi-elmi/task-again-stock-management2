@@ -12,9 +12,9 @@
           label="Search Product"
           @focus="focusOnTextField"
           @focusout="unFocusOnTextField"
-          hide-details
-          v-model="id"
+          v-model.number.trim.lazy="id"
           @keyup.en.enter="sendRequest(id)"
+
 
 
       >
@@ -103,8 +103,8 @@
         </v-col>
       </v-row>
     </v-container>
-    <div class="display-1 productFallback grey--text text-center" v-else>
-      <v-icon x-large>mdi-magnify</v-icon>
+    <div @click="focusOnTextField" class="display-1 productFallback grey--text text-center" v-else>
+      <v-icon class="teal--text" x-large>mdi-magnify</v-icon>
       <div>Search Products</div>
 
     </div>
@@ -123,6 +123,9 @@ export default {
       backgroundInput:'grey lighten-3',
       id:null,
       amount:null,
+      // rules:[
+      //     value=>(typeof value === 'number')||'Id is a number'
+      // ]
     }
   },
   computed:{
@@ -143,9 +146,17 @@ export default {
 
     sendRequest() {
       // which apis has been called -- product/:id or :id/stock
+        let ind = this.products?.findIndex(p=>p.id === this.id)
+        console.log('****', ind)
+        if(ind>=0){
+          console.log('****', ind)
+          this.deleteShowedResult(ind)
+        }
+
       const requestToStore = this.$route.name === 'product'
           ? 'product/fetchProductById'
           : 'product/fetchStockById'
+
 
       this.$store.dispatch(requestToStore, this.id)
           .then(() => {
@@ -190,7 +201,6 @@ export default {
     deleteShowedResult(index){
       //
       this.$store.dispatch('product/deleteProductByIndex', index)
-      this.products = this.$store.getters['product/getProducts']
     }
   }
 

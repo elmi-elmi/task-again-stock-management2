@@ -54,18 +54,18 @@ export default {
   border-left: 4px solid orange;
 }
 .v-chip.refill{
-  background: green;
+  background: teal;
 }
 .v-chip.decrease{
-  background: tomato;
+  background: coral;
 }
 
 .report.refill{
-  border-left: 4px solid green;
+  border-left: 4px solid teal;
 
 }
 .report.decrease{
-  border-left: 4px solid tomato;
+  border-left: 4px solid coral;
 
 }
 .reportFallback{

@@ -36,7 +36,7 @@
 
   <v-app-bar
       app
-      color="primary"
+      color="primary lighten-5"
       dark
       flat
   >
@@ -45,7 +45,11 @@
     <v-toolbar-title dark>
       <span  class="text-uppercase  teal text-overline pa-1 " >Stock</span>
       <span class="  text-uppercase  text-overline orange pa-1">management</span>
+
     </v-toolbar-title>
+    <v-icon large class="primary--text">
+      mdi-store-cog-outline
+    </v-icon>
 
     <v-spacer></v-spacer>
     <v-btn small text >
@@ -66,9 +70,9 @@ export default {
   data(){return{
     drawer: false,
     items: [
-      { title: 'Product', icon: 'mdi-view-dashboard',to:{name:'product',path:'/'} },
+      { title: 'Products', icon: 'mdi-view-dashboard',to:{name:'product',path:'/'} },
       // { title: 'Stock', icon: 'mdi-account-box', to:{name:'stock',path:'/'} },
-      { title: 'Report', icon: 'mdi-file-chart-outline',to:{name:'report',path:'/report'} },
+      { title: 'Reports', icon: 'mdi-file-chart-outline',to:{name:'report',path:'/report'} },
     ],
   }}
 }
