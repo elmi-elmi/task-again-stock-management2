@@ -17,11 +17,13 @@ export default {
     REFILL_PRODUCT(state, product) {
         const index = state.products.findIndex(p=>p.id === product.id)
         state.products[index] = product
+        localStorage.setItem('products', JSON.stringify(state.products))
     },
 
     DECREASE_PRODUCT(state, product) {
         const index = state.products.findIndex(p=>p.id === product.id)
         state.products[index] = product
+        localStorage.setItem('products', JSON.stringify(state.products))
     },
 
     DELETE_PRODUCT_BY_INDEX(state,index){
