@@ -1,14 +1,11 @@
 <template>
   <h1>stock view</h1>
-
 </template>
 
 <script>
 export default {
-  name: "StockView"
-}
+  name: "StockView",
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

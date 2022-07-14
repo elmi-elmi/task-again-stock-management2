@@ -15,6 +15,10 @@ const api = axios.create({
 
 export default{
 
+    getProducts(){
+        return api.get('/product')
+    }
+
     /*=======================================================
         GET REQUESTS (/product/)
      =======================================================*/
