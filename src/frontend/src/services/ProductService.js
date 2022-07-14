@@ -1,65 +1,58 @@
-import axios from 'axios';
-
+import axios from "axios";
 
 /*=======================================================
     API CALL WITH AXIOS
  =======================================================*/
 const api = axios.create({
-    baseURL:'http://localhost:8080/api',
-    withCredentials:false,
-    headers:{
-        Accept:'application/json',
-        'Content-Type': 'application/json'
-    }
-})
+    baseURL: "http://localhost:8080/api",
+    withCredentials: false,
+    headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+    },
+});
 
-export default{
-
-    getProducts(){
-        return api.get('/product')
-    }
+export default {
+    getProducts() {
+        return api.get("/product");
+    },
 
     /*=======================================================
         GET REQUESTS (/product/)
      =======================================================*/
     /*
-    *  GET request
-    *  $ curl -s -i -w "\n" -X GET localhost:8080/api/product/1
-    */
-    getProductById(id){
-        return api.get(`/product/${id}`)
+     *  GET request
+     *  $ curl -s -i -w "\n" -X GET localhost:8080/api/product/1
+     */
+    getProductById(id) {
+        return api.get(`/product/${id}`);
     },
 
     /*
      *  GET request
      *  $ curl -s -i -w "\n" -X GET localhost:8080/api/product/1/stock
      */
-    getStockById(id){
-        return api.get(`/product/${id}/stock`,13)
-
+    getStockById(id) {
+        return api.get(`/product/${id}/stock`, 13);
     },
-
 
     /*=======================================================
        PUT REQUESTS (/product/)
       =======================================================*/
 
     /*
-   *  PUT request
-   *  $ curl -s -i -w "\n" -X PUT localhost:8080/api/product/1/refill?amount=5
-   */
-    putRefillProduct(id,amount){
-        return api.put(`/product/${id}/refill?amount=${amount}`)
+     *  PUT request
+     *  $ curl -s -i -w "\n" -X PUT localhost:8080/api/product/1/refill?amount=5
+     */
+    putRefillProduct(id, amount) {
+        return api.put(`/product/${id}/refill?amount=${amount}`);
     },
 
-
     /*
-   *  PUT request
-   *  $ curl -s -i -w "\n" -X PUT localhost:8080/api/product/1/buy?amount=3
-   */
-    putDecreaseProduct(id, amount){
-        return api.put(`/product/${id}/buy?amount=${amount}`)
-    }
-
-}
-
+     *  PUT request
+     *  $ curl -s -i -w "\n" -X PUT localhost:8080/api/product/1/buy?amount=3
+     */
+    putDecreaseProduct(id, amount) {
+        return api.put(`/product/${id}/buy?amount=${amount}`);
+    },
+};
