@@ -6,7 +6,7 @@ export default {
      =======================================================*/
 
   fetchProducts({ commit }) {
-    return ProductService.getProducts().then((res) => console.log(res));
+    return ProductService.getProducts().then(({data})=> commit("ADD_PRODUCTS",data) )
   },
 
   /*  

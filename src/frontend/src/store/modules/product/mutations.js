@@ -2,6 +2,9 @@ export default {
   /*=======================================================
                             PRODUCT
      ======================================================= */
+  ADD_PRODUCTS(state,products){
+    state.products = products
+  },
   /*
    *  requested product save in the `state.product`
    */

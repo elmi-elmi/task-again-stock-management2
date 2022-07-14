@@ -1,36 +1,39 @@
 <template>
    <div class="product">
-      <v-card
-         class="pa-0 ma-4 mx-auto"
-         :flat="!isFocus"
-         rounded
-         max-width="500"
-      >
+
+
+      <ProductsTable></ProductsTable>
+     <div v-if="false">
+       <v-card
+           class="pa-0 ma-4 mx-auto"
+           :flat="!isFocus"
+           rounded
+           max-width="500"
+       >
          <v-text-field
-            :background-color="backgroundInput"
-            rounded
-            label="Search Product"
-            @focus="focusOnTextField"
-            @focusout="unFocusOnTextField"
-            v-model.number.trim.lazy="id"
-            @keyup.en.enter="sendRequest(id)"
+             :background-color="backgroundInput"
+             rounded
+             label="Search Product"
+             @focus="focusOnTextField"
+             @focusout="unFocusOnTextField"
+             v-model.number.trim.lazy="id"
+             @keyup.en.enter="sendRequest(id)"
          >
-            <v-icon
+           <v-icon
                slot="prepend-inner"
                :color="`${isFocus ? 'teal' : 'grey'}`"
-            >
-               mdi-magnify
-            </v-icon>
-            <v-icon
+           >
+             mdi-magnify
+           </v-icon>
+           <v-icon
                @click="sendRequest"
                slot="append"
                :color="`${isFocus ? 'success' : 'grey'}`"
-            >
-               mdi-plus
-            </v-icon>
+           >
+             mdi-plus
+           </v-icon>
          </v-text-field>
-      </v-card>
-
+       </v-card>
       <v-container v-if="products.length">
          <v-row class="mb-2">
             <v-col
@@ -100,15 +103,17 @@
          <v-icon class="teal--text" large>mdi-magnify</v-icon>
          <div>Search Products</div>
       </div>
+     </div>
    </div>
 </template>
 
 <script>
-import store from "@/store";
-
+import ProductsTable from "@/components/ProductsTable";
 export default {
    name: "ProductView",
-   data() {
+  components: {ProductsTable},
+
+  data() {
       return {
          isFocus: false,
          backgroundInput: "grey lighten-3",
@@ -121,11 +126,15 @@ export default {
    },
    computed: {
       products() {
-         return this.$store.getters["product/getProducts"];
+         // return this.$store.getters['product/getProducts']
+        return []
       },
    },
 
    methods: {
+      getProducts(){
+                  this.$store.dispatch('product/fetchProducts')
+      },
       OnTextField() {
          (this.isFocus = true), (this.backgroundInput = "white");
       },
