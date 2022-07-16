@@ -1,5 +1,8 @@
 <template>
    <div class="product">
+     <v-btn @click="updateNew">
+       updateee
+     </v-btn>
 
 
       <ProductsTable></ProductsTable>
@@ -115,6 +118,7 @@ export default {
 
   data() {
       return {
+        newProduct:{id:1,name:'shahrokh2',stock:'20',reservations:[]},
          isFocus: false,
          backgroundInput: "grey lighten-3",
          id: null,
@@ -132,6 +136,9 @@ export default {
    },
 
    methods: {
+     updateNew(){
+       this.$store.dispatch('product/updateProduct',this.newProduct)
+     },
       getProducts(){
                   this.$store.dispatch('product/fetchProducts')
       },

@@ -82,5 +82,14 @@ export default {
         .then(({data})=>{
           commit('SET_PRODUCT',data)
         })
+  },
+
+  updateProduct({commit},product){
+    return ProductService.patchProduct(product)
+        .then(({data})=>{
+          console.log('patch',data)
+          commit('SET_PRODUCT',data)
+
+    })
   }
 };

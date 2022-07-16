@@ -299,6 +299,8 @@ export default {
     },
 
     close() {
+      this.reserveValue = null
+      this.amount = null
       this.dialog = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -307,6 +309,8 @@ export default {
     },
 
     closeDelete() {
+      this.reserveValue = null
+      this.amount = null
       this.dialogDelete = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -358,7 +362,6 @@ export default {
       this.$store.dispatch('product/fetchProductById', this.editedItem.id).then(() => {
         console.log('---')
         this.editedItem = this.$store.state.product.product
-        this.refresh()
         this.reserveValue = null
 
       })

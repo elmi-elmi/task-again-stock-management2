@@ -55,8 +55,22 @@ export default {
         return api.put(`/product/${id}/buy?amount=${amount}`);
     },
 
+    /**
+    *  PUT request
+    *  $ curl -s -i -w "\n" -X PUT localhost:8080/api/product/1/buy?amount=3
+    * @param id product id
+    */
+
     putReserveProduct(id,amount){
         console.log(id,amount)
         return api.put(`/product/${id}/reserve?amount=${amount}`)
+    },
+
+    /*=======================================================
+      PATCH REQUESTS (/update/)
+     =======================================================*/
+    patchProduct(product){
+        console.log('service',product)
+        return api.patch('/product/update',product)
     }
 };
