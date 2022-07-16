@@ -8,9 +8,9 @@ export default {
   /*
    *  requested product save in the `state.product`
    */
-  ADD_PRODUCT(state, product) {
-    state.products.unshift(product);
-    localStorage.setItem("products", JSON.stringify(state.products));
+  SET_PRODUCT(state, product) {
+    state.product = product;
+    // localStorage.setItem("products", JSON.stringify(state.products));
   },
 
   /*
@@ -18,19 +18,22 @@ export default {
    */
   REFILL_PRODUCT(state, product) {
     const index = state.products.findIndex((p) => p.id === product.id);
-    state.products[index] = product;
-    localStorage.setItem("products", JSON.stringify(state.products));
+    Object.assign(state.products[index], product)
+    // state.products[index] = product;
+    // localStorage.setItem("products", JSON.stringify(state.products));
   },
 
   DECREASE_PRODUCT(state, product) {
     const index = state.products.findIndex((p) => p.id === product.id);
-    state.products[index] = product;
-    localStorage.setItem("products", JSON.stringify(state.products));
+    Object.assign(state.products[index], product)
+
+    // state.products[index] = product;
+    // localStorage.setItem("products", JSON.stringify(state.products));
   },
 
   DELETE_PRODUCT_BY_INDEX(state, index) {
     state.products = state.products.filter((p, i) => i !== index);
-    localStorage.setItem("products", JSON.stringify(state.products));
+    // localStorage.setItem("products", JSON.stringify(state.products));
   },
 
   DELETE_PRODUCT(state) {

@@ -8,6 +8,7 @@ export default {
   namespaced: true,
   state: {
     products,
+    product:{}
   },
   mutations,
   actions,

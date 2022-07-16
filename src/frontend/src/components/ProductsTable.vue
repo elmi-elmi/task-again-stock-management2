@@ -12,12 +12,13 @@
       ></v-text-field>
     </v-card-title>
 
+    <v-btn @click="refresh">refresh</v-btn>
   <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="products"
       sort-by="calories"
       class="elevation-1"
-      :loading="!desserts.length"
+      :loading="!products.length"
       loading-text="Loading... Please wait"
       :search="search"
   >
@@ -46,6 +47,12 @@
               New Item
             </v-btn>
           </template>
+          <v-card>
+            <v-text-field label="amount" v-model="amount">
+            </v-text-field>
+            <v-btn @click="changeStockValue('refill',editedItem.id)">Refill</v-btn>
+            <v-btn @click="changeStockValue('decrease',editedItem.id)">Decrease</v-btn>
+          </v-card>
           <v-card>
             <v-card-title>
               <span class="text-h5">{{ formTitle }}</span>
@@ -131,11 +138,11 @@
         </v-dialog>
       </v-toolbar>
     </template>
-    <template v-slot:item.actions="{ item }">
+    <template v-slot:item.actions="{ item,index }">
       <v-icon
           small
           class="mr-2"
-          @click="editItem(item)"
+          @click="editItem(item,index)"
       >
         mdi-pencil
       </v-icon>
@@ -162,6 +169,7 @@
 export default {
   name: "ProductsTable",
   data: () => ({
+    amount:null,
     search:'',
     dialog: false,
     dialogDelete: false,
@@ -177,7 +185,7 @@ export default {
       { text: 'reservations', value: 'reservations' },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
-    desserts: [],
+    products: [],
     editedIndex: -1,
     editedItem: {
       name: '',
@@ -216,24 +224,29 @@ export default {
     initialize () {
       this.$store.dispatch('product/fetchProducts').then(()=>{
 
-      this.desserts =  this.$store.getters['product/getProducts']
+      this.products =  this.$store.getters['product/getProducts']
       })
     },
 
-    editItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
+    editItem (item,i) {
+      console.log(i)
+      this.editedIndex = this.products.indexOf(item)
+      // this.editedItem = item
+      this.$store.dispatch('product/fetchProductById',item.id).then(()=>{
+        console.log('---')
+      this.editedItem = this.$store.state.product.product
+      })
       this.dialog = true
     },
 
     deleteItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
+      this.editedIndex = this.products.indexOf(item)
+      this.editedItem = item
       this.dialogDelete = true
     },
 
     deleteItemConfirm () {
-      this.desserts.splice(this.editedIndex, 1)
+      this.products.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
@@ -255,13 +268,44 @@ export default {
 
     save () {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        Object.assign(this.products[this.editedIndex], this.editedItem)
       } else {
-        this.desserts.push(this.editedItem)
+        this.products.push(this.editedItem)
       }
       this.close()
     },
+    changeStockValue(req, id) {
+      // select which apis should be sent
+      const requestToStore =
+          req === "refill"
+              ? "product/addStockAmount"
+              : "product/decreaseStockAmount";
+      // send request to store
+      this.$store
+          .dispatch(requestToStore, {
+            name: this.$route.name,
+            id,
+            amount: this.amount,
+          })
+          .then(() => {
+            this.amount = null;
+            this.$store.dispatch('product/fetchProductById',this.editedItem.id ).then(()=>{
+              console.log('---')
+              this.editedItem = this.$store.state.product.product
+            })
+          }) // clear input
+          .catch((e) => {
+            // Todo
+            console.log(e);
+          });
+    },
+    refresh(){
+      this.$store.dispatch('product/fetchProducts').then(()=>{
+        this.products = this.$store.state.product.products
+      })
+    }
   },
+
 }
 </script>
 

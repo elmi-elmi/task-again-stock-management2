@@ -9,13 +9,13 @@ export default {
     return ProductService.getProducts().then(({data})=> commit("ADD_PRODUCTS",data) )
   },
 
-  /*  
-   
+  /*
+
    *  GET request --> to fetch product by ID
    */
   fetchProductById({ commit }, productId) {
     return ProductService.getProductById(productId).then(({ data }) => {
-      commit("ADD_PRODUCT", data);
+      commit("SET_PRODUCT", data);
     });
   },
 
