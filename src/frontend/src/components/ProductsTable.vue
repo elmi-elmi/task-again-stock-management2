@@ -13,155 +13,207 @@
     </v-card-title>
 
     <v-btn @click="refresh">refresh</v-btn>
-  <v-data-table
-      :headers="headers"
-      :items="products"
-      sort-by="calories"
-      class="elevation-1"
-      :loading="!products.length"
-      loading-text="Loading... Please wait"
-      :search="search"
-  >
-    <template v-slot:top>
-      <v-toolbar
-          flat
-      >
-<!--        <v-divider-->
-<!--            class="mx-4"-->
-<!--            inset-->
-<!--            vertical-->
-<!--        ></v-divider>-->
-        <v-spacer></v-spacer>
-        <v-dialog
-            v-model="dialog"
-            max-width="500px"
+    <v-data-table
+        :headers="headers"
+        :items="products"
+        sort-by="calories"
+        class="elevation-1"
+        :loading="!products.length"
+        loading-text="Loading... Please wait"
+        :search="search"
+        show-expand
+    >
+      <template v-slot:top>
+        <v-toolbar
+            flat
         >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-                color="primary"
-                dark
-                class="mb-2"
-                v-bind="attrs"
-                v-on="on"
-            >
-              New Item
-            </v-btn>
+          <!--        <v-divider-->
+          <!--            class="mx-4"-->
+          <!--            inset-->
+          <!--            vertical-->
+          <!--        ></v-divider>-->
+          <v-spacer></v-spacer>
+          <v-dialog
+              v-model="dialog"
+              max-width="500px"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                  color="primary"
+                  dark
+                  class="mb-2"
+                  v-bind="attrs"
+                  v-on="on"
+              >
+                New Item
+              </v-btn>
+            </template>
+            <v-card>
+              <v-text-field label="amount" v-model="amount">
+              </v-text-field>
+              <v-btn @click="changeStockValue('refill',editedItem.id)">Refill</v-btn>
+              <v-btn @click="changeStockValue('decrease',editedItem.id)">Decrease</v-btn>
+            </v-card>
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">{{ formTitle }}</span>
+              </v-card-title>
+
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                    >
+                      <v-text-field
+                          v-model="editedItem.name"
+                          label="Product name"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                    >
+                      <v-text-field
+                          v-model="editedItem.stock"
+                          label="Stock"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                    >
+                      <v-text-field
+                          v-model="editedItem.id"
+                          label="id"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                    >
+                      <v-text-field
+                          v-model="editedItem.reservations"
+                          label="reservations"
+                      ></v-text-field>
+                    </v-col>
+
+                  </v-row>
+                </v-container>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="blue darken-1"
+                    text
+                    @click="close"
+                >
+                  Cancel
+                </v-btn>
+                <v-btn
+                    color="blue darken-1"
+                    text
+                    @click="save"
+                >
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <v-dialog v-model="dialogDelete" max-width="500px">
+            <v-card>
+              <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-toolbar>
+      </template>
+      <template v-slot:item.actions="{ item,index }">
+        <v-icon
+            small
+            class="mr-2"
+            @click="editItem(item,index)"
+        >
+          mdi-pencil
+        </v-icon>
+        <v-icon
+            small
+            @click="deleteItem(item)"
+        >
+          mdi-delete
+        </v-icon>
+      </template>
+      <template v-slot:no-data>
+        <v-btn
+            color="primary"
+            @click="initialize"
+        >
+          Reset
+        </v-btn>
+      </template>
+      <template v-slot:item.reservations="props">
+        <v-edit-dialog
+            :return-value.sync="props.item.reservation"
+            large
+            persistent
+
+
+        >
+          <div>{{ props.item.reservations.length ? 'show' : 'no resereve' }}</div>
+          <template v-slot:input>
+            <div class="mt-4 text-h6">
+              Update reservations
+            </div>
+            <v-text-field
+                v-model="props.item.reservations.amount"
+                label="Edit"
+                single-line
+                counter
+                autofocus
+            ></v-text-field>
           </template>
-          <v-card>
-            <v-text-field label="amount" v-model="amount">
-            </v-text-field>
-            <v-btn @click="changeStockValue('refill',editedItem.id)">Refill</v-btn>
-            <v-btn @click="changeStockValue('decrease',editedItem.id)">Decrease</v-btn>
-          </v-card>
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">{{ formTitle }}</span>
-            </v-card-title>
+        </v-edit-dialog>
+      </template>
 
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <v-text-field
-                        v-model="editedItem.name"
-                        label="Product name"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <v-text-field
-                        v-model="editedItem.stock"
-                        label="Stock"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <v-text-field
-                        v-model="editedItem.id"
-                        label="id"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                  >
-                    <v-text-field
-                        v-model="editedItem.reservations"
-                        label="reservations"
-                    ></v-text-field>
-                  </v-col>
+      <template v-slot:item.data-table-expand="{item,isExpanded, isSelected,expand}">
+        <div v-if="item.reservations.length">
+          <div v-if="isExpanded">
+            <span class="grey--text">show</span>
+            <v-icon  @click="expand(!isExpanded)">
+              mdi-chevron-up
+            </v-icon>
+          </div>
+          <div v-else>
+            <span class="grey--text">hide</span>
+            <v-icon @click="expand(!isExpanded)">
+            mdi-chevron-down
+          </v-icon>
+          </div>
+        </div>
+        <div v-else class="grey--text">
+          No reserve
+        </div>
 
-                </v-row>
-              </v-container>
-            </v-card-text>
 
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="close"
-              >
-                Cancel
-              </v-btn>
-              <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="save"
-              >
-                Save
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-dialog v-model="dialogDelete" max-width="500px">
-          <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-toolbar>
-    </template>
-    <template v-slot:item.actions="{ item,index }">
-      <v-icon
-          small
-          class="mr-2"
-          @click="editItem(item,index)"
-      >
-        mdi-pencil
-      </v-icon>
-      <v-icon
-          small
-          @click="deleteItem(item)"
-      >
-        mdi-delete
-      </v-icon>
-    </template>
-    <template v-slot:no-data>
-      <v-btn
-          color="primary"
-          @click="initialize"
-      >
-        Reset
-      </v-btn>
-    </template>
-  </v-data-table>
+      </template>
+      <template v-slot:expanded-item="{ headers, item }">
+        <td :colspan="headers.length">
+          {{ item.reservations }}
+        </td>
+      </template>
+
+    </v-data-table>
   </div>
 </template>
 
@@ -169,8 +221,8 @@
 export default {
   name: "ProductsTable",
   data: () => ({
-    amount:null,
-    search:'',
+    amount: null,
+    search: '',
     dialog: false,
     dialogDelete: false,
     headers: [
@@ -180,10 +232,10 @@ export default {
         sortable: false,
         value: 'name',
       },
-      { text: 'Stock', value: 'stock' },
-      { text: 'id', value: 'id' },
-      { text: 'reservations', value: 'reservations' },
-      { text: 'Actions', value: 'actions', sortable: false },
+      {text: 'Stock', value: 'stock', align: 'start'},
+      {text: 'id', value: 'id'},
+      {text: 'reservations', value: 'data-table-expand'},
+      {text: 'Actions', value: 'actions', sortable: false, align: 'end'},
     ],
     products: [],
     editedIndex: -1,
@@ -202,55 +254,55 @@ export default {
   }),
 
   computed: {
-    formTitle () {
+    formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
   },
 
   watch: {
-    dialog (val) {
+    dialog(val) {
       val || this.close()
     },
-    dialogDelete (val) {
+    dialogDelete(val) {
       val || this.closeDelete()
     },
   },
 
-  created () {
+  created() {
     this.initialize()
   },
 
   methods: {
-    initialize () {
-      this.$store.dispatch('product/fetchProducts').then(()=>{
+    initialize() {
+      this.$store.dispatch('product/fetchProducts').then(() => {
 
-      this.products =  this.$store.getters['product/getProducts']
+        this.products = this.$store.getters['product/getProducts']
       })
     },
 
-    editItem (item,i) {
-      console.log(i)
+    editItem(item, i) {
+      console.log(item.reservations)
       this.editedIndex = this.products.indexOf(item)
       // this.editedItem = item
-      this.$store.dispatch('product/fetchProductById',item.id).then(()=>{
+      this.$store.dispatch('product/fetchProductById', item.id).then(() => {
         console.log('---')
-      this.editedItem = this.$store.state.product.product
+        this.editedItem = this.$store.state.product.product
       })
       this.dialog = true
     },
 
-    deleteItem (item) {
+    deleteItem(item) {
       this.editedIndex = this.products.indexOf(item)
       this.editedItem = item
       this.dialogDelete = true
     },
 
-    deleteItemConfirm () {
+    deleteItemConfirm() {
       this.products.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
-    close () {
+    close() {
       this.dialog = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -258,7 +310,7 @@ export default {
       })
     },
 
-    closeDelete () {
+    closeDelete() {
       this.dialogDelete = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -266,7 +318,7 @@ export default {
       })
     },
 
-    save () {
+    save() {
       if (this.editedIndex > -1) {
         Object.assign(this.products[this.editedIndex], this.editedItem)
       } else {
@@ -289,7 +341,7 @@ export default {
           })
           .then(() => {
             this.amount = null;
-            this.$store.dispatch('product/fetchProductById',this.editedItem.id ).then(()=>{
+            this.$store.dispatch('product/fetchProductById', this.editedItem.id).then(() => {
               console.log('---')
               this.editedItem = this.$store.state.product.product
             })
@@ -299,8 +351,8 @@ export default {
             console.log(e);
           });
     },
-    refresh(){
-      this.$store.dispatch('product/fetchProducts').then(()=>{
+    refresh() {
+      this.$store.dispatch('product/fetchProducts').then(() => {
         this.products = this.$store.state.product.products
       })
     }

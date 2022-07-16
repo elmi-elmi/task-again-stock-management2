@@ -39,7 +39,6 @@ export default {
     /*=======================================================
        PUT REQUESTS (/product/)
       =======================================================*/
-
     /*
      *  PUT request
      *  $ curl -s -i -w "\n" -X PUT localhost:8080/api/product/1/refill?amount=5
