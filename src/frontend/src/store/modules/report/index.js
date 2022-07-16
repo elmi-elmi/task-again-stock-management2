@@ -3,7 +3,7 @@ import actions from "@/store/modules/report/actions";
 import getters from "@/store/modules/report/getters";
 import saveStatePlugin from "@/utils/saveStatePlugin";
 
-const reports = JSON.parse(localStorage.getItem('reports')) || []
+const reports = []
 
 export default {
     plugins:[saveStatePlugin],

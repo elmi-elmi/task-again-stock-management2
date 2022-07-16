@@ -1,16 +1,6 @@
 <template>
   <div class="tabel">
-    <v-card-title>
-      Products
-      <v-spacer></v-spacer>
-      <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-      ></v-text-field>
-    </v-card-title>
+
 
     <v-btn @click="refresh">refresh</v-btn>
     <v-data-table
@@ -27,12 +17,14 @@
         <v-toolbar
             flat
         >
-          <!--        <v-divider-->
-          <!--            class="mx-4"-->
-          <!--            inset-->
-          <!--            vertical-->
-          <!--        ></v-divider>-->
-          <v-spacer></v-spacer>
+
+          <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+          ></v-text-field>
           <v-dialog
               v-model="dialog"
               max-width="500px"
@@ -50,57 +42,11 @@
               <v-btn @click="reserveProduct(editedItem.id)">reserve</v-btn>
             </v-card>
             <v-card>
-              <v-card-title>
-                <span class="text-h5">{{ formTitle }}</span>
-              </v-card-title>
+              <v-text-field v-model="editedItem.name" label="edit name"></v-text-field>
+              <v-btn @click="updateName">update</v-btn>
+            </v-card>
+            <v-card>
 
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col
-                        cols="12"
-                        sm="6"
-                        md="4"
-                    >
-                      <v-text-field
-                          v-model="editedItem.name"
-                          label="Product name"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                        cols="12"
-                        sm="6"
-                        md="4"
-                    >
-                      <v-text-field
-                          v-model="editedItem.stock"
-                          label="Stock"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                        cols="12"
-                        sm="6"
-                        md="4"
-                    >
-                      <v-text-field
-                          v-model="editedItem.id"
-                          label="id"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                        cols="12"
-                        sm="6"
-                        md="4"
-                    >
-                      <v-text-field
-                          v-model="editedItem.reservations"
-                          label="reservations"
-                      ></v-text-field>
-                    </v-col>
-
-                  </v-row>
-                </v-container>
-              </v-card-text>
 
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -109,15 +55,9 @@
                     text
                     @click="close"
                 >
-                  Cancel
+                  Close
                 </v-btn>
-                <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="save"
-                >
-                  Save
-                </v-btn>
+
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -149,21 +89,12 @@
           mdi-delete
         </v-icon>
       </template>
-      <template v-slot:no-data>
-        <v-btn
-            color="primary"
-            @click="initialize"
-        >
-          Reset
-        </v-btn>
-      </template>
-      <template v-slot:item.reservations="props">
+
+      <template v-slot:item.="props">
         <v-edit-dialog
-            :return-value.sync="props.item.reservation"
+            :return-value.sync="props.item.reservations"
             large
             persistent
-
-
         >
           <div>{{ props.item.reservations.length ? 'show' : 'no resereve' }}</div>
           <template v-slot:input>
@@ -184,13 +115,13 @@
       <template v-slot:item.data-table-expand="{item,isExpanded, isSelected,expand}">
         <div v-if="item.reservations.length">
           <div v-if="isExpanded">
-            <span class="grey--text">show</span>
+            <span class="grey--text">hide</span>
             <v-icon @click="expand(!isExpanded)">
               mdi-chevron-up
             </v-icon>
           </div>
           <div v-else>
-            <span class="grey--text">hide</span>
+            <span class="grey--text">show</span>
             <v-icon @click="expand(!isExpanded)">
               mdi-chevron-down
             </v-icon>
@@ -216,6 +147,7 @@
 export default {
   name: "ProductsTable",
   data: () => ({
+    newName:'',
     reserveValue: null,
     amount: null,
     search: '',
@@ -365,7 +297,10 @@ export default {
         this.reserveValue = null
 
       })
-    }
+    },
+    updateName(){
+      this.$store.dispatch('product/updateProduct',this.editedItem)
+    },
   },
 
 }
