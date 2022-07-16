@@ -54,4 +54,9 @@ export default {
     putDecreaseProduct(id, amount) {
         return api.put(`/product/${id}/buy?amount=${amount}`);
     },
+
+    putReserveProduct(id,amount){
+        console.log(id,amount)
+        return api.put(`/product/${id}/reserve?amount=${amount}`)
+    }
 };

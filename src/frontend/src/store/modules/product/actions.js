@@ -75,4 +75,12 @@ export default {
   deleteProductByIndex({ commit }, index) {
     commit("DELETE_PRODUCT_BY_INDEX", index);
   },
+
+
+  addReserveProduct({commit},{id, amount}){
+    return ProductService.putReserveProduct(id,amount)
+        .then(({data})=>{
+          commit('SET_PRODUCT',data)
+        })
+  }
 };

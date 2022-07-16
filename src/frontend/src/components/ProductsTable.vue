@@ -37,22 +37,17 @@
               v-model="dialog"
               max-width="500px"
           >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                  color="primary"
-                  dark
-                  class="mb-2"
-                  v-bind="attrs"
-                  v-on="on"
-              >
-                New Item
-              </v-btn>
-            </template>
+
             <v-card>
               <v-text-field label="amount" v-model="amount">
               </v-text-field>
               <v-btn @click="changeStockValue('refill',editedItem.id)">Refill</v-btn>
               <v-btn @click="changeStockValue('decrease',editedItem.id)">Decrease</v-btn>
+            </v-card>
+
+            <v-card>
+              <v-text-field v-model="reserveValue" label="reserve"></v-text-field>
+              <v-btn @click="reserveProduct(editedItem.id)">reserve</v-btn>
             </v-card>
             <v-card>
               <v-card-title>
@@ -190,15 +185,15 @@
         <div v-if="item.reservations.length">
           <div v-if="isExpanded">
             <span class="grey--text">show</span>
-            <v-icon  @click="expand(!isExpanded)">
+            <v-icon @click="expand(!isExpanded)">
               mdi-chevron-up
             </v-icon>
           </div>
           <div v-else>
             <span class="grey--text">hide</span>
             <v-icon @click="expand(!isExpanded)">
-            mdi-chevron-down
-          </v-icon>
+              mdi-chevron-down
+            </v-icon>
           </div>
         </div>
         <div v-else class="grey--text">
@@ -221,6 +216,7 @@
 export default {
   name: "ProductsTable",
   data: () => ({
+    reserveValue: null,
     amount: null,
     search: '',
     dialog: false,
@@ -341,10 +337,10 @@ export default {
           })
           .then(() => {
             this.amount = null;
-            this.$store.dispatch('product/fetchProductById', this.editedItem.id).then(() => {
-              console.log('---')
-              this.editedItem = this.$store.state.product.product
-            })
+            this.$store.dispatch('product/fetchProductById', this.editedItem.id)
+                .then(() => {
+                  this.editedItem = this.$store.state.product.product
+                })
           }) // clear input
           .catch((e) => {
             // Todo
@@ -354,6 +350,17 @@ export default {
     refresh() {
       this.$store.dispatch('product/fetchProducts').then(() => {
         this.products = this.$store.state.product.products
+      })
+    },
+    reserveProduct(id) {
+      console.log(id)
+      this.$store.dispatch('product/addReserveProduct', {id, amount: this.reserveValue})
+      this.$store.dispatch('product/fetchProductById', this.editedItem.id).then(() => {
+        console.log('---')
+        this.editedItem = this.$store.state.product.product
+        this.refresh()
+        this.reserveValue = null
+
       })
     }
   },
