@@ -1,9 +1,6 @@
 <template>
    <div class="product">
       <ProductsTable></ProductsTable>
-
-
-
    </div>
 </template>
 

@@ -81,23 +81,8 @@
       </template>
 
       <template v-slot:item.data-table-expand="{item,isExpanded, isSelected,expand}">
-        <div v-if="item.reservations.length">
-          <div v-if="isExpanded">
-            <span class="grey--text">hide</span>
-            <v-icon @click="expand(!isExpanded)">
-              mdi-chevron-up
-            </v-icon>
-          </div>
-          <div v-else>
-            <span class="grey--text">show</span>
-            <v-icon @click="expand(!isExpanded)">
-              mdi-chevron-down
-            </v-icon>
-          </div>
-        </div>
-        <div v-else class="grey--text">
-          No reserve
-        </div>
+        <!--        TODO add fallback text, icons name, show and hide text-->
+        <ChevronExpand :expand="expand" :is-expanded="isExpanded" :item="item.reservations"/>
       </template>
 
       <template v-slot:expanded-item="{ headers, item }">
@@ -111,9 +96,11 @@
 <script>
 import EditCard from "@/components/EditCard";
 import ReserveTable from "@/components/ReserveTable";
+import ChevronExpand from "@/components/ChevronExpand";
+
 export default {
   name: "ProductsTable",
-  components: {EditCard, ReserveTable},
+  components: {EditCard, ReserveTable, ChevronExpand},
   data: () => ({
     newName: '',
     reserveValue: null,
@@ -176,9 +163,9 @@ export default {
         this.products = this.$store.getters['product/getProducts']
       })
     },
-    reserveDate(d){
+    reserveDate(d) {
       const date = new Date(d)
-      return `${date.getMonth()+1}/ ${date.getDate()} / ${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+      return `${date.getMonth() + 1}/ ${date.getDate()} / ${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
     },
     editItem(item, i) {
       this.editedIndex = this.products.indexOf(item)
