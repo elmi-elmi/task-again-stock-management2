@@ -42,33 +42,20 @@ export default {
               ? "product/addStockAmount"
               : "product/decreaseStockAmount";
       // send request to store
-      this.$store
-          .dispatch(requestToStore, {
-            id,
-            amount: this.amount,
-          })
+      this.$store.dispatch(requestToStore, {id, amount: this.amount,})
           .then(() => {
             this.amount = null;
             this.$store.dispatch('product/fetchProductById', this.editedItem.id)
-                .then(() => {
-                  // this.editedItem = this.$store.state.product.product
-                })
-          }) // clear input
+          })
           .catch((e) => {
             // Todo
             console.log(e);
           });
     },
     reserveProduct(id) {
-      console.log(id)
       this.$store.dispatch('product/addReserveProduct', {id, amount: this.reserveValue})
-      // this.$store.dispatch('product/fetchProductById', this.editedItem.id)
-      //     .then(() => {
-      //       this.editedItem = this.$store.state.product.product
-      //       this.reserveValue = null
-      //       console.log(this.editedItem.reservations)
-      //
-      //     })
+      .then(()=>this.reserveValue=null)
+
     },
     updateName() {
       this.$store.dispatch('product/updateProduct', this.editedItem)

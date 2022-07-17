@@ -42,7 +42,7 @@ export default {
             })
             .then((data) => {
                 console.log(data)
-                context.dispatch("report/addReport", {amount, ...data, status: "refill"}, {root: true})
+                return context.dispatch("report/addReport", {amount, ...data, status: "refill"}, {root: true})
             })
     },
 
@@ -57,7 +57,7 @@ export default {
             })
             .then((data) => {
                 console.log(data)
-                context.dispatch("report/addReport", {amount, ...data, status: "decrease"}, {root: true})
+                return context.dispatch("report/addReport", {amount, ...data, status: "decrease"}, {root: true})
             })
 
 
@@ -76,7 +76,6 @@ export default {
             .then(({data}) => {
                 console.log('patch', data)
                 commit('SET_PRODUCT', data)
-
             })
     }
 };

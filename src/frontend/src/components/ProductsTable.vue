@@ -17,7 +17,6 @@
             @close="close"
             :edited-item="editedItem"
             :dialog="dialog"/>
-
       </template>
 
       <template v-slot:item.actions="{ item,index }">
@@ -35,7 +34,6 @@
       </template>
 
       <template v-slot:item.data-table-expand="{item,isExpanded, isSelected,expand}">
-        <!--        TODO add fallback text, icons name, show and hide text-->
         <ChevronExpand :expand="expand" :is-expanded="isExpanded" :item="item.reservations"/>
       </template>
 
@@ -78,20 +76,10 @@ export default {
 
   }),
 
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-    },
-
-  },
-
   watch: {
     dialog(val) {
       val || this.close()
     },
-    // dialogDelete(val) {
-    //   val || this.closeDelete()
-    // },
   },
 
   created() {
@@ -99,9 +87,11 @@ export default {
   },
 
   methods: {
+
     setSearch(e) {
       this.search = e
     },
+
     initialize() {
       this.$store.dispatch('product/fetchProducts')
           .then(() => {
@@ -110,36 +100,15 @@ export default {
     },
 
     editItem(item) {
-      console.log(item.id)
       this.$store.dispatch('product/fetchProductById', item.id)
-          .then(() => {
-
-            Object.assign(this.editedItem,this.$store.state.product.product)
-
-          })
+          .then(() => Object.assign(this.editedItem,this.$store.state.product.product))
       this.dialog = true
     },
-
-    // deleteItem(item, i) {
-    //   this.editedIndex = this.products.indexOf(item)
-    //   this.editedItem = item
-    //   this.dialogDelete = true
-    // },
-    //
-    // deleteItemConfirm() {
-    //   this.products.splice(this.editedIndex, 1)
-    //   this.closeDelete()
-    // },
 
     close() {
       this.dialog = false
 
     },
-
-    // closeDelete() {
-    //   this.dialogDelete = false
-    // },
-
 
   },
 
