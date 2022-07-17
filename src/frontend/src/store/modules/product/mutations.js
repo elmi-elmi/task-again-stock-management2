@@ -10,6 +10,7 @@ export default {
    *  requested product save in the `state.product`
    */
   SET_PRODUCT(state, product) {
+    state.product = {};
     Object.assign(state.product, product)
 
     const index = state.products.findIndex(p=>p.id===product.id)

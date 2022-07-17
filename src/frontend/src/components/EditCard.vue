@@ -1,12 +1,32 @@
 <template>
-  <v-card>
-    <v-card>
+  <v-card flat class="pa-1">
+    <h1 class="grey--text caption pa-2">Edit Product</h1>
+    <v-card flat class="pa-4" :key="product.id">
+      <v-row>
+      <v-card-title class="primary--text">{{
+          product.name
+        }}
+      </v-card-title>
+      <v-spacer></v-spacer>
+      <v-card-subtitle class="grey--text">{{product.id}}</v-card-subtitle>
+      </v-row>
+      <v-card-text>{{ product.stock }}</v-card-text>
+      <v-row class="pa-4">
+        <span class="grey--text ">Reservations:&nbsp</span>
+      <span  v-for="r in product.reservations" >{{r.amount}},</span>
+      </v-row>
+
+    </v-card>
+
+    <v-divider/>
       <v-row
           align="center"
-          class="pa-1"
+          class="pa-1 ma-0"
       >
         <v-col sm="6">
           <v-text-field
+              hide-details
+              class="ma-0 pa-0"
               :background-color="backgroundInput"
               rounded
               label="amount"
@@ -14,9 +34,7 @@
           </v-text-field>
         </v-col>
         <v-col sm="6">
-
           <v-btn
-
               class="pa-1"
               small
               outlined
@@ -42,15 +60,15 @@
         </v-col>
 
       </v-row>
-    </v-card>
 
-    <v-card>
       <v-row
           align="center"
-          class="pa-1"
+          class="pa-1 ma-0"
       >
-        <v-col sm="6">
+        <v-col sm="6" >
           <v-text-field
+              hide-details
+              class="ma-0 pa-0"
               :background-color="backgroundInput"
               rounded
               v-model="reserveValue" label="reserve">
@@ -75,14 +93,14 @@
           </v-btn>
         </v-col>
       </v-row>
-    </v-card>
-    <v-card>
       <v-row
           align="center"
-          class="pa-1"
+          class="pa-1 ma-0"
       >
         <v-col sm="8">
       <v-text-field
+          hide-details
+          class="ma-0 pa-0"
           :background-color="backgroundInput"
           rounded
           v-model="editedItem.name"
@@ -100,13 +118,14 @@
       </v-btn>
         </v-col>
       </v-row>
-    </v-card>
   </v-card>
 </template>
 
 <script>
+import {mapState} from 'vuex';
 export default {
   name: "EditCard",
+
 
   data() {
     return {
@@ -123,7 +142,10 @@ export default {
   computed: {
     backgroundInput() {
       return 'grey lighten-3'
-    }
+    },
+    ...mapState('product',{
+      product: state=>state.product
+    })
   },
   methods: {
     changeStockValue(req, id) {

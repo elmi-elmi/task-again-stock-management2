@@ -20,9 +20,8 @@
 
     >
       <!--            // TODO edit comp. 111-->
-      <EditCard :edited-item="editedItem" :key="editedItem.id" />
-
       <v-card>
+      <EditCard :edited-item="editedItem" :key="editedItem.id" />
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
