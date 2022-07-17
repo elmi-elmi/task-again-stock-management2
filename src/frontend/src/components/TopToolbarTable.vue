@@ -19,7 +19,7 @@
         max-width="500px"
     >
       <!--            // TODO edit comp. 111-->
-      <EditCard :edited-item="editedItem" :key="editedItem.id"/>
+      <EditCard :edited-item="editedItem" :key="editedItem.id" />
 
       <v-card>
         <v-card-actions>

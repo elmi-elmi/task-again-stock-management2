@@ -52,7 +52,7 @@ export default {
             this.amount = null;
             this.$store.dispatch('product/fetchProductById', this.editedItem.id)
                 .then(() => {
-                  this.editedItem = this.$store.state.product.product
+                  // this.editedItem = this.$store.state.product.product
                 })
           }) // clear input
           .catch((e) => {

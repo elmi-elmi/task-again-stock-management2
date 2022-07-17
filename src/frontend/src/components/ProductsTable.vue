@@ -12,7 +12,11 @@
     >
 
       <template v-slot:top>
-        <TopToolbarTable @setSearch="setSearch" @close="close" :edited-item="editedItem" :dialog="dialog"/>
+        <TopToolbarTable
+            @setSearch="setSearch"
+            @close="close"
+            :edited-item="editedItem"
+            :dialog="dialog"/>
 
       </template>
 
@@ -106,9 +110,13 @@ export default {
     },
 
     editItem(item) {
-      this.$store.dispatch('product/fetchProductById', item.id).then(() => {
-        this.editedItem = this.$store.state.product.product
-      })
+      console.log(item.id)
+      this.$store.dispatch('product/fetchProductById', item.id)
+          .then(() => {
+
+            Object.assign(this.editedItem,this.$store.state.product.product)
+
+          })
       this.dialog = true
     },
 
