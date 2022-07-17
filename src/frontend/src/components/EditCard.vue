@@ -62,7 +62,6 @@ export default {
       console.log(id)
       this.$store.dispatch('product/addReserveProduct', {id, amount: this.reserveValue})
       this.$store.dispatch('product/fetchProductById', this.editedItem.id).then(() => {
-        console.log('---')
         this.editedItem = this.$store.state.product.product
         this.reserveValue = null
 
@@ -71,7 +70,13 @@ export default {
     updateName() {
       this.$store.dispatch('product/updateProduct', this.editedItem)
     },
-  }
+  },
+
+ destroyed() {
+    this.amount = null;
+    this.reserveValue = null;
+ }
+
 }
 </script>
 

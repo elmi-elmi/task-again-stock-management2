@@ -14,7 +14,7 @@
         <v-toolbar
             flat
         >
-          // TODO  search bar comp.
+          <!--          // TODO  search bar comp.-->
           <v-text-field
               v-model="search"
               append-icon="mdi-magnify"
@@ -23,32 +23,15 @@
               hide-details
           ></v-text-field>
 
-          // TODO dialog comp.
+          <!--          // TODO dialog comp.-->
           <v-dialog
               v-model="dialog"
               max-width="500px"
           >
+            <!--            // TODO edit comp. 111-->
+            <EditCard :edited-item="editedItem" :key="editedItem.id"/>
 
-            // TODO edit comp. 111
-            <EditCard :edited-item="editedItem"/>
-<!--            <v-card>-->
-<!--              <v-text-field label="amount" v-model="amount">-->
-<!--              </v-text-field>-->
-<!--              <v-btn @click="changeStockValue('refill',editedItem.id)">Refill</v-btn>-->
-<!--              <v-btn @click="changeStockValue('decrease',editedItem.id)">Decrease</v-btn>-->
-<!--            </v-card>-->
-
-<!--            <v-card>-->
-<!--              <v-text-field v-model="reserveValue" label="reserve"></v-text-field>-->
-<!--              <v-btn @click="reserveProduct(editedItem.id)">reserve</v-btn>-->
-<!--            </v-card>-->
-<!--            <v-card>-->
-<!--              <v-text-field v-model="editedItem.name" label="edit name"></v-text-field>-->
-<!--              <v-btn @click="updateName">update</v-btn>-->
-<!--            </v-card>-->
-<!--            <v-card>-->
-
-
+            <v-card>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
@@ -58,12 +41,11 @@
                 >
                   Close
                 </v-btn>
-
               </v-card-actions>
             </v-card>
           </v-dialog>
 
-         // TODO dialog comp
+          <!--         // TODO dialog comp-->
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
@@ -95,25 +77,7 @@
       </template>
 
       <template v-slot:item.="props">
-        <v-edit-dialog
-            :return-value.sync="props.item.reservations"
-            large
-            persistent
-        >
-          <div>{{ props.item.reservations.length ? 'show' : 'no reserve' }}</div>
-          <template v-slot:input>
-            <div class="mt-4 text-h6">
-              Update reservations
-            </div>
-            <v-text-field
-                v-model="props.item.reservations.amount"
-                label="Edit"
-                single-line
-                counter
-                autofocus
-            ></v-text-field>
-          </template>
-        </v-edit-dialog>
+        <div>{{ props.item.reservations.length ? 'show' : 'no reserve' }}</div>
       </template>
 
       <template v-slot:item.data-table-expand="{item,isExpanded, isSelected,expand}">
@@ -138,6 +102,7 @@
 
       </template>
       <template v-slot:expanded-item="{ headers, item }">
+        <!--        TODO reserve comp card-->
         <td :colspan="headers.length">
           {{ item.reservations }}
         </td>
@@ -149,9 +114,10 @@
 
 <script>
 import EditCard from "@/components/EditCard";
+
 export default {
   name: "ProductsTable",
-  components:{EditCard},
+  components: {EditCard},
   data: () => ({
     newName: '',
     reserveValue: null,
@@ -215,11 +181,9 @@ export default {
     },
 
     editItem(item, i) {
-      console.log(item.reservations)
       this.editedIndex = this.products.indexOf(item)
       // this.editedItem = item
       this.$store.dispatch('product/fetchProductById', item.id).then(() => {
-        console.log('---')
         this.editedItem = this.$store.state.product.product
       })
       this.dialog = true
@@ -264,45 +228,7 @@ export default {
       }
       this.close()
     },
-    changeStockValue(req, id) {
-      // select which apis should be sent
-      const requestToStore =
-          req === "refill"
-              ? "product/addStockAmount"
-              : "product/decreaseStockAmount";
-      // send request to store
-      this.$store
-          .dispatch(requestToStore, {
-            name: this.$route.name,
-            id,
-            amount: this.amount,
-          })
-          .then(() => {
-            this.amount = null;
-            this.$store.dispatch('product/fetchProductById', this.editedItem.id)
-                .then(() => {
-                  this.editedItem = this.$store.state.product.product
-                })
-          }) // clear input
-          .catch((e) => {
-            // Todo
-            console.log(e);
-          });
-    },
 
-    reserveProduct(id) {
-      console.log(id)
-      this.$store.dispatch('product/addReserveProduct', {id, amount: this.reserveValue})
-      this.$store.dispatch('product/fetchProductById', this.editedItem.id).then(() => {
-        console.log('---')
-        this.editedItem = this.$store.state.product.product
-        this.reserveValue = null
-
-      })
-    },
-    updateName() {
-      this.$store.dispatch('product/updateProduct', this.editedItem)
-    },
   },
 
 }
