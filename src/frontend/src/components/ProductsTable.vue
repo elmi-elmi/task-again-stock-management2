@@ -64,13 +64,13 @@
         <v-icon
             small
             class="mr-2"
-            @click="editItem(item,index)"
+            @click="editItem(item)"
         >
           mdi-pencil
         </v-icon>
         <v-icon
             small
-            @click="deleteItem(item)"
+            @click="deleteItem(item,index)"
         >
           mdi-delete
         </v-icon>
@@ -102,9 +102,6 @@ export default {
   name: "ProductsTable",
   components: {EditCard, ReserveTable, ChevronExpand},
   data: () => ({
-    newName: '',
-    reserveValue: null,
-    amount: null,
     search: '',
     dialog: false,
     dialogDelete: false,
@@ -128,12 +125,7 @@ export default {
       id: 0,
       reservations: 0,
     },
-    defaultItem: {
-      name: '',
-      stock: 0,
-      reservations: 0,
-      id: 0,
-    },
+
   }),
 
   computed: {
@@ -158,25 +150,20 @@ export default {
 
   methods: {
     initialize() {
-      this.$store.dispatch('product/fetchProducts').then(() => {
+      this.$store.dispatch('product/fetchProducts')
+          .then(() => {
+            this.products = this.$store.getters['product/getProducts']
+          })
+    },
 
-        this.products = this.$store.getters['product/getProducts']
-      })
-    },
-    reserveDate(d) {
-      const date = new Date(d)
-      return `${date.getMonth() + 1}/ ${date.getDate()} / ${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-    },
-    editItem(item, i) {
-      this.editedIndex = this.products.indexOf(item)
-      // this.editedItem = item
+    editItem(item) {
       this.$store.dispatch('product/fetchProductById', item.id).then(() => {
         this.editedItem = this.$store.state.product.product
       })
       this.dialog = true
     },
 
-    deleteItem(item) {
+    deleteItem(item,i) {
       this.editedIndex = this.products.indexOf(item)
       this.editedItem = item
       this.dialogDelete = true
@@ -188,33 +175,14 @@ export default {
     },
 
     close() {
-      this.reserveValue = null
-      this.amount = null
       this.dialog = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
+
     },
 
     closeDelete() {
-      this.reserveValue = null
-      this.amount = null
       this.dialogDelete = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
     },
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.products[this.editedIndex], this.editedItem)
-      } else {
-        this.products.push(this.editedItem)
-      }
-      this.close()
-    },
 
   },
 
