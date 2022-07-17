@@ -16,7 +16,8 @@
     <v-dialog
         @click:outside="$emit('close')"
         :value="dialog"
-        max-width="500px"
+        max-width="700px"
+
     >
       <!--            // TODO edit comp. 111-->
       <EditCard :edited-item="editedItem" :key="editedItem.id" />
@@ -25,8 +26,10 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-              color="blue darken-1"
-              text
+              class="pa-1"
+              small
+              outlined
+              color="primary darken-1"
               @click="$emit('close')"
           >
             Close

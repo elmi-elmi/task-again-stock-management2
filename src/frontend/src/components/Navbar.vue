@@ -1,6 +1,7 @@
 <template>
   <nav>
     <v-navigation-drawer v-model="drawer" app color="primary lighten-1">
+<!--      nav list comp TODO-->
       <v-list>
         <v-list-item
           v-for="item in items"
@@ -26,6 +27,8 @@
         </div>
       </template>
     </v-navigation-drawer>
+
+    <!--     app bar comp TODO-->
 
     <v-app-bar app color="primary lighten-5" dark flat>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>

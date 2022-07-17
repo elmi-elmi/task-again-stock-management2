@@ -1,19 +1,105 @@
 <template>
   <v-card>
     <v-card>
-      <v-text-field label="amount" v-model="amount">
-      </v-text-field>
-      <v-btn @click="changeStockValue('refill',editedItem.id)">Refill</v-btn>
-      <v-btn @click="changeStockValue('decrease',editedItem.id)">Decrease</v-btn>
+      <v-row
+          align="center"
+          class="pa-1"
+      >
+        <v-col sm="6">
+          <v-text-field
+              :background-color="backgroundInput"
+              rounded
+              label="amount"
+              v-model="amount">
+          </v-text-field>
+        </v-col>
+        <v-col sm="6">
+
+          <v-btn
+
+              class="pa-1"
+              small
+              outlined
+              color="success"
+              @click="changeStockValue('refill',editedItem.id)">
+            Refill
+            <v-icon
+                right
+            >mdi-plus</v-icon>
+          </v-btn>
+
+          <v-btn
+              class="pa-1 ml-1"
+              small
+              outlined
+              color="warning"
+              @click="changeStockValue('decrease',editedItem.id)">
+            Decrease
+            <v-icon
+            right
+            >mdi-minus</v-icon>
+          </v-btn>
+        </v-col>
+
+      </v-row>
     </v-card>
 
     <v-card>
-      <v-text-field v-model="reserveValue" label="reserve"></v-text-field>
-      <v-btn @click="reserveProduct(editedItem.id)">reserve</v-btn>
+      <v-row
+          align="center"
+          class="pa-1"
+      >
+        <v-col sm="6">
+          <v-text-field
+              :background-color="backgroundInput"
+              rounded
+              v-model="reserveValue" label="reserve">
+
+          </v-text-field>
+        </v-col>
+        <v-col sm="6">
+          <v-btn
+              class="pa-1"
+              small
+              outlined
+              color="success"
+              @click="reserveProduct(editedItem.id)"
+          >
+            reserve
+            <v-icon
+                right
+
+            >
+              mdi-table-plus
+            </v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-card>
     <v-card>
-      <v-text-field v-model="editedItem.name" label="edit name"></v-text-field>
-      <v-btn @click="updateName">update</v-btn>
+      <v-row
+          align="center"
+          class="pa-1"
+      >
+        <v-col sm="8">
+      <v-text-field
+          :background-color="backgroundInput"
+          rounded
+          v-model="editedItem.name"
+          label="edit name"
+      ></v-text-field>
+        </v-col>
+        <v-col>
+      <v-btn
+          class="pa-1"
+          small
+          outlined
+          color="success"
+          sm="4" @click="updateName">
+        update
+      </v-btn>
+        </v-col>
+      </v-row>
     </v-card>
   </v-card>
 </template>
@@ -32,6 +118,11 @@ export default {
     editedItem: {
       required: true,
       type: Object
+    }
+  },
+  computed: {
+    backgroundInput() {
+      return 'grey lighten-3'
     }
   },
   methods: {
@@ -54,7 +145,7 @@ export default {
     },
     reserveProduct(id) {
       this.$store.dispatch('product/addReserveProduct', {id, amount: this.reserveValue})
-      .then(()=>this.reserveValue=null)
+          .then(() => this.reserveValue = null)
 
     },
     updateName() {
