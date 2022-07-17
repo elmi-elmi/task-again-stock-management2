@@ -62,7 +62,6 @@ export default {
     */
 
     putReserveProduct(id,amount){
-        console.log(id,amount)
         return api.put(`/product/${id}/reserve?amount=${amount}`)
     },
 
@@ -70,7 +69,6 @@ export default {
       PATCH REQUESTS (/update/)
      =======================================================*/
     patchProduct(product){
-        console.log('service',product)
         return api.patch('/product/update',product)
     }
 };
