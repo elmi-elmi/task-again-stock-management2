@@ -4,11 +4,11 @@
     <v-container class="my-5 pa-4" v-if="report.length">
       <v-card tile class="pa-4 mx-auto">
         <v-list
-          justify="center"
-          align-content="center"
-          :class="`pa-2 `"
-          v-for="report in report"
-          :key="Date.now()"
+            justify="center"
+            align-content="center"
+            :class="`pa-2 `"
+            v-for="report in report"
+            :key="Date.now()"
         >
           <v-row :class="`report ${report.status}`">
             <v-col class="" sm="2">
@@ -25,9 +25,10 @@
             </v-col>
             <v-col sm="2" class="d-flex justify-end">
               <v-chip
-                label
-                :class="`mt-2  white--text caption ${report.status}`"
-                >{{ report.amount }}</v-chip
+                  label
+                  :class="`mt-2  white--text caption ${report.status}`"
+              >{{ report.amount }}
+              </v-chip
               >
             </v-col>
           </v-row>
@@ -55,9 +56,11 @@ export default {
 .reportBorder {
   border-left: 4px solid orange;
 }
+
 .v-chip.refill {
   background: teal;
 }
+
 .v-chip.decrease {
   background: coral;
 }
@@ -65,9 +68,11 @@ export default {
 .report.refill {
   border-left: 4px solid teal;
 }
+
 .report.decrease {
   border-left: 4px solid coral;
 }
+
 .reportFallback {
   position: absolute;
   top: 50%;

@@ -44,7 +44,6 @@ export default {
       // send request to store
       this.$store
           .dispatch(requestToStore, {
-            name: this.$route.name,
             id,
             amount: this.amount,
           })
