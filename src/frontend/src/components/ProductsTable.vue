@@ -98,14 +98,10 @@
         <div v-else class="grey--text">
           No reserve
         </div>
-
-
       </template>
+
       <template v-slot:expanded-item="{ headers, item }">
-        <!--        TODO reserve comp card-->
-        <td :colspan="headers.length">
-          {{ item.reservations }}
-        </td>
+        <reserve-table v-if="item.reservations.length" :headers="headers" :item="item.reservations"/>
       </template>
 
     </v-data-table>
@@ -114,10 +110,10 @@
 
 <script>
 import EditCard from "@/components/EditCard";
-
+import ReserveTable from "@/components/ReserveTable";
 export default {
   name: "ProductsTable",
-  components: {EditCard},
+  components: {EditCard, ReserveTable},
   data: () => ({
     newName: '',
     reserveValue: null,
@@ -157,6 +153,7 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
+
   },
 
   watch: {
@@ -179,7 +176,10 @@ export default {
         this.products = this.$store.getters['product/getProducts']
       })
     },
-
+    reserveDate(d){
+      const date = new Date(d)
+      return `${date.getMonth()+1}/ ${date.getDate()} / ${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+    },
     editItem(item, i) {
       this.editedIndex = this.products.indexOf(item)
       // this.editedItem = item

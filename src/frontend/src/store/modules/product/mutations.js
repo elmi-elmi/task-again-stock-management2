@@ -12,6 +12,7 @@ export default {
   SET_PRODUCT(state, product) {
     // state.product = product;
     Object.assign(state.product, product)
+
     const index = state.products.findIndex(p=>p.id===product.id)
     Object.assign(state.products[index], product)
     // localStorage.setItem("products", JSON.stringify(state.products));
