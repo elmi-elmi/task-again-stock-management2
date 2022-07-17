@@ -10,54 +10,10 @@
         :search="search"
         show-expand
     >
+
       <template v-slot:top>
-        <v-toolbar
-            flat
-        >
-          <!--          // TODO  search bar comp.-->
-          <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              label="Search"
-              single-line
-              hide-details
-          ></v-text-field>
+        <TopToolbarTable @setSearch="setSearch" @close="close" :edited-item="editedItem" :dialog="dialog"/>
 
-          <!--          // TODO dialog comp.-->
-          <v-dialog
-              v-model="dialog"
-              max-width="500px"
-          >
-            <!--            // TODO edit comp. 111-->
-            <EditCard :edited-item="editedItem" :key="editedItem.id"/>
-
-            <v-card>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="close"
-                >
-                  Close
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-
-          <!--         // TODO dialog comp-->
-          <v-dialog v-model="dialogDelete" max-width="500px">
-            <v-card>
-              <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-                <v-spacer></v-spacer>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-toolbar>
       </template>
 
       <template v-slot:item.actions="{ item,index }">
@@ -67,12 +23,6 @@
             @click="editItem(item)"
         >
           mdi-pencil
-        </v-icon>
-        <v-icon
-            small
-            @click="deleteItem(item,index)"
-        >
-          mdi-delete
         </v-icon>
       </template>
 
@@ -97,21 +47,17 @@
 import EditCard from "@/components/EditCard";
 import ReserveTable from "@/components/ReserveTable";
 import ChevronExpand from "@/components/ChevronExpand";
+import TopToolbarTable from "@/components/TopToolbarTable";
 
 export default {
   name: "ProductsTable",
-  components: {EditCard, ReserveTable, ChevronExpand},
+  components: {EditCard, ReserveTable, ChevronExpand, TopToolbarTable},
   data: () => ({
     search: '',
     dialog: false,
     dialogDelete: false,
     headers: [
-      {
-        text: 'Name',
-        align: 'start',
-        sortable: false,
-        value: 'name',
-      },
+      {text: 'Name', align: 'start', sortable: false, value: 'name',},
       {text: 'Stock', value: 'stock', align: 'start'},
       {text: 'id', value: 'id'},
       {text: 'reservations', value: 'data-table-expand'},
@@ -139,9 +85,9 @@ export default {
     dialog(val) {
       val || this.close()
     },
-    dialogDelete(val) {
-      val || this.closeDelete()
-    },
+    // dialogDelete(val) {
+    //   val || this.closeDelete()
+    // },
   },
 
   created() {
@@ -149,6 +95,9 @@ export default {
   },
 
   methods: {
+    setSearch(e) {
+      this.search = e
+    },
     initialize() {
       this.$store.dispatch('product/fetchProducts')
           .then(() => {
@@ -163,25 +112,25 @@ export default {
       this.dialog = true
     },
 
-    deleteItem(item,i) {
-      this.editedIndex = this.products.indexOf(item)
-      this.editedItem = item
-      this.dialogDelete = true
-    },
-
-    deleteItemConfirm() {
-      this.products.splice(this.editedIndex, 1)
-      this.closeDelete()
-    },
+    // deleteItem(item, i) {
+    //   this.editedIndex = this.products.indexOf(item)
+    //   this.editedItem = item
+    //   this.dialogDelete = true
+    // },
+    //
+    // deleteItemConfirm() {
+    //   this.products.splice(this.editedIndex, 1)
+    //   this.closeDelete()
+    // },
 
     close() {
       this.dialog = false
 
     },
 
-    closeDelete() {
-      this.dialogDelete = false
-    },
+    // closeDelete() {
+    //   this.dialogDelete = false
+    // },
 
 
   },
