@@ -1,7 +1,6 @@
 <template>
     <v-app id="inspire">
         <Navbar />
-
         <v-main>
             <router-view></router-view>
         </v-main>
@@ -14,7 +13,6 @@ export default {
     name: "app",
     components: { Navbar },
     data: () => ({
-        cards: ["Today", "Yesterday"],
     }),
 };
 </script>

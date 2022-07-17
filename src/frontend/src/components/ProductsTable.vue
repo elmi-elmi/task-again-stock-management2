@@ -1,8 +1,5 @@
 <template>
-  <div class="tabel">
-
-
-    <v-btn @click="refresh">refresh</v-btn>
+  <div class="table">
     <v-data-table
         :headers="headers"
         :items="products"
@@ -17,7 +14,7 @@
         <v-toolbar
             flat
         >
-
+          // TODO  search bar comp.
           <v-text-field
               v-model="search"
               append-icon="mdi-magnify"
@@ -25,27 +22,31 @@
               single-line
               hide-details
           ></v-text-field>
+
+          // TODO dialog comp.
           <v-dialog
               v-model="dialog"
               max-width="500px"
           >
 
-            <v-card>
-              <v-text-field label="amount" v-model="amount">
-              </v-text-field>
-              <v-btn @click="changeStockValue('refill',editedItem.id)">Refill</v-btn>
-              <v-btn @click="changeStockValue('decrease',editedItem.id)">Decrease</v-btn>
-            </v-card>
+            // TODO edit comp. 111
+            <EditCard :edited-item="editedItem"/>
+<!--            <v-card>-->
+<!--              <v-text-field label="amount" v-model="amount">-->
+<!--              </v-text-field>-->
+<!--              <v-btn @click="changeStockValue('refill',editedItem.id)">Refill</v-btn>-->
+<!--              <v-btn @click="changeStockValue('decrease',editedItem.id)">Decrease</v-btn>-->
+<!--            </v-card>-->
 
-            <v-card>
-              <v-text-field v-model="reserveValue" label="reserve"></v-text-field>
-              <v-btn @click="reserveProduct(editedItem.id)">reserve</v-btn>
-            </v-card>
-            <v-card>
-              <v-text-field v-model="editedItem.name" label="edit name"></v-text-field>
-              <v-btn @click="updateName">update</v-btn>
-            </v-card>
-            <v-card>
+<!--            <v-card>-->
+<!--              <v-text-field v-model="reserveValue" label="reserve"></v-text-field>-->
+<!--              <v-btn @click="reserveProduct(editedItem.id)">reserve</v-btn>-->
+<!--            </v-card>-->
+<!--            <v-card>-->
+<!--              <v-text-field v-model="editedItem.name" label="edit name"></v-text-field>-->
+<!--              <v-btn @click="updateName">update</v-btn>-->
+<!--            </v-card>-->
+<!--            <v-card>-->
 
 
               <v-card-actions>
@@ -61,6 +62,8 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
+
+         // TODO dialog comp
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
@@ -74,6 +77,7 @@
           </v-dialog>
         </v-toolbar>
       </template>
+
       <template v-slot:item.actions="{ item,index }">
         <v-icon
             small
@@ -96,7 +100,7 @@
             large
             persistent
         >
-          <div>{{ props.item.reservations.length ? 'show' : 'no resereve' }}</div>
+          <div>{{ props.item.reservations.length ? 'show' : 'no reserve' }}</div>
           <template v-slot:input>
             <div class="mt-4 text-h6">
               Update reservations
@@ -144,10 +148,12 @@
 </template>
 
 <script>
+import EditCard from "@/components/EditCard";
 export default {
   name: "ProductsTable",
+  components:{EditCard},
   data: () => ({
-    newName:'',
+    newName: '',
     reserveValue: null,
     amount: null,
     search: '',
@@ -283,11 +289,7 @@ export default {
             console.log(e);
           });
     },
-    refresh() {
-      this.$store.dispatch('product/fetchProducts').then(() => {
-        this.products = this.$store.state.product.products
-      })
-    },
+
     reserveProduct(id) {
       console.log(id)
       this.$store.dispatch('product/addReserveProduct', {id, amount: this.reserveValue})
@@ -298,8 +300,8 @@ export default {
 
       })
     },
-    updateName(){
-      this.$store.dispatch('product/updateProduct',this.editedItem)
+    updateName() {
+      this.$store.dispatch('product/updateProduct', this.editedItem)
     },
   },
 
