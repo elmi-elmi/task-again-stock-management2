@@ -5,7 +5,7 @@
     <ProductDetailsCard/>
 
     <v-divider/>
-    <SellAndBuyRequest :edited-item="editedItem"/>
+    <SellAndBuyRequest  :edited-item="editedItem"/>
 
     <ReserveProductRequest :edited-item="editedItem"/>
 

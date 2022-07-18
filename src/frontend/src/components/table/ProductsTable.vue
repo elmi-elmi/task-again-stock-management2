@@ -107,6 +107,7 @@ export default {
     },
 
     editItem(item) {
+      // this.editedItem = {}
       this.$store.dispatch('product/fetchProductById', item.id)
           .then(() => Object.assign(this.editedItem, this.$store.state.product.product))
       this.dialog = true
