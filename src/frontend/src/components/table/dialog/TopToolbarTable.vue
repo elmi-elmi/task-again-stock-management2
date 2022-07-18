@@ -50,7 +50,7 @@
  *
  * @author Shahrokh elmi
  */
-import EditCard from "@/components/EditCard";
+import EditCard from "@/components/table/dialog/EditCard";
 
 export default {
   name: "TopToolbarTable",

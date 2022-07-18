@@ -53,10 +53,10 @@
  *
  * @author Shahrokh elmi
  */
-import EditCard from "@/components/EditCard";
-import ReserveTable from "@/components/ReserveTable";
-import ChevronExpand from "@/components/ChevronExpand";
-import TopToolbarTable from "@/components/TopToolbarTable";
+import EditCard from "@/components/table/dialog/EditCard";
+import ReserveTable from "@/components/table/ReserveTable";
+import ChevronExpand from "@/components/table/ChevronExpand";
+import TopToolbarTable from "@/components/table/dialog/TopToolbarTable";
 
 export default {
   name: "ProductsTable",

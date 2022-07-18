@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ProductsTable from "@/components/ProductsTable";
+import ProductsTable from "@/components/table/ProductsTable";
 
 /**
  * Product Vie

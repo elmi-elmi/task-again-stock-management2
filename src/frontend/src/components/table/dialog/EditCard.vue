@@ -86,8 +86,8 @@
  */
 
 
-import ProductDetailsCard from "@/components/ProductDetailsCard";
-import EditRow from "@/components/EditRow";
+import ProductDetailsCard from "@/components/table/dialog/ProductDetailsCard";
+import EditRow from "@/components/table/dialog/EditRow";
 
 export default {
   name: "EditCard",

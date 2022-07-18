@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import NavDrawer from "@/components/NavDrawer";
-import ToolbarTitle from "@/components/ToolbarTitle";
+import NavDrawer from "@/components/navbar/NavDrawer";
+import ToolbarTitle from "@/components/navbar/ToolbarTitle";
 /**
  * navbar
  *
