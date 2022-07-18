@@ -99,6 +99,7 @@ export default {
 
 
     },
+
     /**
      * PUT request from services
      * add reserve to product
@@ -108,7 +109,6 @@ export default {
      * @param amount the amount asked to reserve
      * @return promise contain response from backend
      */
-
     addReserveProduct({commit}, {id, amount}) {
         return ProductService.putReserveProduct(id, amount)
             .then(({data}) => {
@@ -124,7 +124,6 @@ export default {
      * @param product the product selected to update
      * @return promise contain response from backend
      */
-
     updateProduct({commit}, product) {
         return ProductService.patchProduct(product)
             .then(({data}) => {

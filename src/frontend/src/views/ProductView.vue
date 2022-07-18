@@ -24,6 +24,5 @@ export default {
 <style scoped>
 .product{
   background: linear-gradient(to bottom right, #f5f2f0 0, #fff 100%)
-
 }
 </style>

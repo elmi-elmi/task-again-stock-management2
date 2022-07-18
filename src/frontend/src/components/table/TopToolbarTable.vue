@@ -2,7 +2,6 @@
   <v-toolbar
       flat
   >
-    <!--          // TODO  search bar comp.-->
     <v-text-field
         :value="search"
         @input="updateSearch"
@@ -12,16 +11,14 @@
         hide-details
     ></v-text-field>
 
-    <!--          // TODO dialog comp.-->
     <v-dialog
         @click:outside="$emit('close')"
         :value="dialog"
         max-width="700px"
-
     >
-      <!--            // TODO edit comp. 111-->
       <v-card>
-      <EditCard :edited-item="editedItem" :key="editedItem.id" />
+        <EditCard :edited-item="editedItem" :key="editedItem.id"/>
+
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
@@ -68,12 +65,12 @@ export default {
   },
   data() {
     return {
-      search:''
+      search: ''
     }
   },
   methods: {
-    updateSearch(e){
-      this.$emit('setSearch',e)
+    updateSearch(e) {
+      this.$emit('setSearch', e)
     }
   }
 }

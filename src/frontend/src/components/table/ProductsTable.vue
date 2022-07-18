@@ -16,7 +16,8 @@
             @setSearch="setSearch"
             @close="close"
             :edited-item="editedItem"
-            :dialog="dialog"/>
+            :dialog="dialog"
+        />
       </template>
 
       <template v-slot:item.actions="{ item,index }">
@@ -108,7 +109,7 @@ export default {
 
     editItem(item) {
       this.$store.dispatch('product/fetchProductById', item.id)
-          .then(() => Object.assign(this.editedItem,this.$store.state.product.product))
+          .then(() => Object.assign(this.editedItem, this.$store.state.product.product))
       this.dialog = true
     },
 
