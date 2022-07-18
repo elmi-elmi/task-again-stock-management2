@@ -56,7 +56,7 @@
 import EditCard from "@/components/table/dialog/EditCard";
 import ReserveTable from "@/components/table/reserve/ReserveTable";
 import ChevronExpand from "@/components/table/reserve/ChevronExpand";
-import TopToolbarTable from "@/components/table/dialog/TopToolbarTable";
+import TopToolbarTable from "@/components/table/TopToolbarTable";
 
 export default {
   name: "ProductsTable",
