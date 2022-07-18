@@ -65,7 +65,6 @@ export default {
   data: () => ({
     search: '',
     dialog: false,
-    dialogDelete: false,
     headers: [
       {text: 'Name', align: 'start', sortable: false, value: 'name',},
       {text: 'Stock', value: 'stock', align: 'start'},

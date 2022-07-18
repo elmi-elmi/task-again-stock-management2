@@ -131,8 +131,7 @@ export default {
             this.$store.dispatch('product/fetchProductById', this.editedItem.id)
           })
           .catch((e) => {
-            // Todo
-            console.log(e);
+            this.$router.push({name:'404Resource'})
           });
     },
     /**
@@ -144,6 +143,9 @@ export default {
     reserveProduct(id) {
       this.$store.dispatch('product/addReserveProduct', {id, amount: this.reserveValue})
           .then(() => this.reserveValue = null)
+          .catch((e) => {
+            this.$router.push({name:'404Resource'})
+          });
     },
 
     /**
@@ -153,6 +155,9 @@ export default {
      */
     updateName() {
       this.$store.dispatch('product/updateProduct', this.editedItem)
+          .catch((e) => {
+            this.$router.push({name:'404Resource'})
+          });
     },
   },
 
