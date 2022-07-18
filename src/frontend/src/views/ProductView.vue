@@ -1,5 +1,5 @@
 <template>
-  <div class="product">
+  <div class="product pa-5">
     <ProductsTable></ProductsTable>
   </div>
 </template>
@@ -22,5 +22,8 @@ export default {
 </script>
 
 <style scoped>
+.product{
+  background: linear-gradient(to bottom right, #f5f2f0 0, #fff 100%)
 
+}
 </style>
