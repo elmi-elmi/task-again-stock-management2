@@ -30,16 +30,17 @@ const routes = [
     component: NotFoundView
   },
   {
-    path:'/404/:resource',
+    // path:'/404/:resource',
+    path:'/404/',
     name:'404Resource',
     component:NotFoundView,
-    props:true
+    // props:true
   },
   {
     path:'/500',
     name:'networkError',
     component: NetworkErrorView,
-    props:true
+    // props:true
   }
 
 ]
