@@ -10,12 +10,6 @@
     <ReserveProductRequest :edited-item="editedItem"/>
 
     <UpdateProductRequest :edited-item="editedItem"/>
-
-
-
-
-
-
   </v-card>
 </template>
 

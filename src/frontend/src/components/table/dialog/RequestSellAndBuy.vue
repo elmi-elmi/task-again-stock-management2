@@ -85,7 +85,6 @@ export default {
    */
   destroyed() {
     this.amount = null;
-    this.reserveValue = null;
   }
 }
 </script>
