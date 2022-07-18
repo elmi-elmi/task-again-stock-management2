@@ -5,75 +5,15 @@
     <ProductDetailsCard/>
 
     <v-divider/>
-    <EditRow v-model="amount">
-      <template #firstButton>
-        <v-btn
-            :disabled="!amount"
-            class="pa-1"
-            small
-            outlined
-            color="success"
-            @click="changeStockValue('refill',editedItem.id)">
-          Refill
-          <v-icon
-              right
-          >mdi-plus
-          </v-icon>
-        </v-btn>
-      </template>
-      <template #secondButton>
-        <v-btn
-            :disabled="!amount"
-            class="pa-1 ml-1"
-            small
-            outlined
-            color="warning"
-            @click="changeStockValue('decrease',editedItem.id)">
-          Decrease
-          <v-icon
-              right
-          >mdi-minus
-          </v-icon>
-        </v-btn>
-      </template>
-    </EditRow>
+    <SellAndBuyRequest :edited-item="editedItem"/>
 
-    <EditRow v-model="reserveValue">
-      <template #firstButton>
-        <v-btn
-            :disabled="!reserveValue"
-            class="pa-1"
-            small
-            outlined
-            color="success"
-            @click="reserveProduct(editedItem.id)"
-        >
-          reserve
-          <v-icon
-              right
+    <ReserveProductRequest :edited-item="editedItem"/>
 
-          >
-            mdi-table-plus
-          </v-icon>
-        </v-btn>
-      </template>
-    </EditRow>
+    <UpdateProductRequest :edited-item="editedItem"/>
 
 
-<!--TODO update btn disable when there is nothing change-->
 
-    <EditRow v-model="editedItem.name">
-      <template #firstButton>
-        <v-btn
-            class="pa-1"
-            small
-            outlined
-            color="success"
-            sm="4" @click="updateName">
-          update
-        </v-btn>
-      </template>
-    </EditRow>
+
 
 
   </v-card>
@@ -91,85 +31,22 @@
 
 import ProductDetailsCard from "@/components/table/dialog/ProductDetailsCard";
 import EditRow from "@/components/table/dialog/EditRow";
-
+import SellAndBuyRequest from "@/components/table/dialog/RequestSellAndBuy";
+import ReserveProductRequest from "@/components/table/dialog/RequestReserveProduct";
+import UpdateProductRequest from "@/components/table/dialog/RequestUpdateProduct";
 export default {
   name: "EditCard",
-  components: {ProductDetailsCard, EditRow},
+  components: {ProductDetailsCard, EditRow,SellAndBuyRequest, ReserveProductRequest, UpdateProductRequest},
 
-  data() {
-    return {
-      amount: null,
-      reserveValue: null,
-    }
-  },
+
   props: {
     editedItem: {
       required: true,
       type: Object
     }
   },
-  computed: {},
-  methods: {
 
-    /**
-     * PUT request to store
-     * increase stock
-     *
-     * @param req refill or increase of stock
-     * @param id id of product which selected to increase stock
-     */
-    changeStockValue(req, id) {
-      // select which apis should be sent
-      const requestToStore =
-          req === "refill"
-              ? "product/addStockAmount"
-              : "product/decreaseStockAmount";
-      // send request to store
-      this.$store.dispatch(requestToStore, {id, amount: this.amount,})
-          .then(() => {
-            this.amount = null;
-            this.$store.dispatch('product/fetchProductById', this.editedItem.id)
-          })
-          .catch((e) => {
-            this.$router.push({name:'404Resource'})
-          });
-    },
-    /**
-     * PUT request to store
-     * reserve product
-     *
-     * @param id id of product asked  reserve
-     */
-    reserveProduct(id) {
-      this.$store.dispatch('product/addReserveProduct', {id, amount: this.reserveValue})
-          .then(() => this.reserveValue = null)
-          .catch((e) => {
-            this.$router.push({name:'404Resource'})
-          });
-    },
 
-    /**
-     * PATCH request to store
-     * update product
-     *
-     */
-    updateName() {
-      this.$store.dispatch('product/updateProduct', this.editedItem)
-          .catch((e) => {
-            this.$router.push({name:'404Resource'})
-          });
-    },
-  },
-
-  /**
-   * after closing the dialog
-   * the amounts reset to initial values
-   *
-   */
-  destroyed() {
-    this.amount = null;
-    this.reserveValue = null;
-  }
 
 }
 </script>
