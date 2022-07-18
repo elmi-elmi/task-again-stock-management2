@@ -28,19 +28,6 @@ export default {
   data() {
     return {
       drawer: false,
-      items: [
-        {
-          title: "Products",
-          icon: "mdi-view-dashboard",
-          to: {name: "product", path: "/"},
-        },
-        // { title: 'Stock', icon: 'mdi-account-box', to:{name:'stock',path:'/'} },
-        {
-          title: "Reports",
-          icon: "mdi-file-chart-outline",
-          to: {name: "report", path: "/report"},
-        },
-      ],
     };
   },
 };

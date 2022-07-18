@@ -19,6 +19,8 @@
  * also text field and button for edit the product
  * all action are here - update - buy - refill - reserve
  *
+ * this card added to TopToolbarTable
+ *
  * @author Shahrokh elmi
  */
 
