@@ -36,6 +36,12 @@ export default {
     }
   },
   methods: {
+    /**
+     * change date format date to mm/dd/yyyy, hh:mm:ss
+     *
+     * @param d date
+     * @author Shahrokh elmi
+     */
     reserveDate(d) {
       const date = new Date(d)
       return `${date.getMonth() + 1}/ ${date.getDate()} / ${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`

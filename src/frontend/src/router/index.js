@@ -3,7 +3,13 @@ import VueRouter from 'vue-router'
 import ProductView from "@/views/ProductView";
 import ReportView from "@/views/ReportView";
 
+/**
+ *
+ * @author Shahrokh elmi
+ */
+
 Vue.use(VueRouter)
+
 
 const routes = [
   {
@@ -16,6 +22,7 @@ const routes = [
     name:'report',
     component:ReportView
   },
+// TODO - errorNetwork route, notFound page and resource route
 
 
 ]

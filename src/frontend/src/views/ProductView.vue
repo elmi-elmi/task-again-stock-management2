@@ -8,7 +8,7 @@
 import ProductsTable from "@/components/table/ProductsTable";
 
 /**
- * Product Vie
+ * Product View
  * Main page to show table of products
  *
  * @author Shahrokh elmi

@@ -59,6 +59,9 @@
       </template>
     </EditRow>
 
+
+<!--TODO update btn disable when there is nothing change-->
+
     <EditRow v-model="editedItem.name">
       <template #firstButton>
         <v-btn
