@@ -108,6 +108,13 @@ export default {
   computed: {},
   methods: {
 
+    /**
+     * PUT request to store
+     * increase stock
+     *
+     * @param req refill or increase of stock
+     * @param id id of product which selected to increase stock
+     */
     changeStockValue(req, id) {
       // select which apis should be sent
       const requestToStore =
@@ -125,16 +132,32 @@ export default {
             console.log(e);
           });
     },
+    /**
+     * PUT request to store
+     * reserve product
+     *
+     * @param id id of product asked  reserve
+     */
     reserveProduct(id) {
       this.$store.dispatch('product/addReserveProduct', {id, amount: this.reserveValue})
           .then(() => this.reserveValue = null)
-
     },
+
+    /**
+     * PATCH request to store
+     * update product
+     *
+     */
     updateName() {
       this.$store.dispatch('product/updateProduct', this.editedItem)
     },
   },
 
+  /**
+   * after closing the dialog
+   * the amounts reset to initial values
+   *
+   */
   destroyed() {
     this.amount = null;
     this.reserveValue = null;
