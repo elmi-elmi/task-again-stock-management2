@@ -26,6 +26,12 @@
 </template>
 
 <script>
+/**
+ * there is a component contain text field
+ * and buttons
+ *
+ * @author Shahrokh elmi
+ */
 export default {
   name: "EditRow",
   props: ['value'],

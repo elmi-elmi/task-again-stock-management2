@@ -2,24 +2,7 @@
   <nav>
     <v-navigation-drawer v-model="drawer" app color="primary lighten-1">
 <!--      nav list comp TODO-->
-      <v-list>
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          :to="{ name: item.to.name }"
-          exact-active-class="primary lighten-4"
-        >
-          <v-list-item-icon>
-            <v-icon small class="white--text">{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title class="white--text caption">{{
-              item.title
-            }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <NavDrawer/>
 
       <template v-slot:append>
         <div class="pa-2">
@@ -30,27 +13,22 @@
 
     <!--     app bar comp TODO-->
 
-    <v-app-bar app color="primary lighten-5" dark flat>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-      <v-toolbar-title dark>
-        <span class="text-uppercase teal text-overline pa-1">Stock</span>
-        <span class="text-uppercase text-overline orange pa-1">management</span>
-      </v-toolbar-title>
-      <v-icon large class="primary--text"> mdi-store-cog-outline </v-icon>
-
-      <v-spacer></v-spacer>
-      <v-btn small text>
-        <span class="text-overline">log out</span>
-        <v-icon small right>mdi-logout</v-icon>
-      </v-btn>
-    </v-app-bar>
+   <ToolbarTitle @click="drawer = !drawer"/>
   </nav>
 </template>
 
 <script>
+import NavDrawer from "@/components/NavDrawer";
+import ToolbarTitle from "@/components/ToolbarTitle";
+/**
+ * navbar
+ *
+ * @author Shahrokh elmi
+ */
+
 export default {
   name: "Navbar",
+  components: {ToolbarTitle, NavDrawer},
   data() {
     return {
       drawer: false,

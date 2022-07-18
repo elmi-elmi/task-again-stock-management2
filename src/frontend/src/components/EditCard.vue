@@ -77,6 +77,15 @@
 </template>
 
 <script>
+/**
+ * the card which show all information of a product
+ * also text field and button for edit the product
+ * all action are here - update - buy - refill - reserve
+ *
+ * @author Shahrokh elmi
+ */
+
+
 import ProductDetailsCard from "@/components/ProductDetailsCard";
 import EditRow from "@/components/EditRow";
 

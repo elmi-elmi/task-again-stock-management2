@@ -17,6 +17,13 @@
 </template>
 
 <script>
+/**
+ * this table showed information about
+ * reservation of a product
+ * this component added to ChevronExpand
+ *
+ * @author Shahrokh elmi
+ */
 export default {
   name: "ReserveTable",
   props: {

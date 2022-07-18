@@ -21,6 +21,11 @@
 </template>
 
 <script>
+/**
+ * expanded chevron for reservation column
+ *
+ * @author Shahrokh elmi
+ */
 export default {
   name: "ChevronExpand",
   props:{

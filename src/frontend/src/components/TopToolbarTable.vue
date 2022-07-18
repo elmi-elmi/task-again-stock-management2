@@ -42,6 +42,14 @@
 </template>
 
 <script>
+/**
+ * this component related to ProductTable
+ * slot:top of table in ProductTable
+ * contain dialog and search bar of table
+ *
+ *
+ * @author Shahrokh elmi
+ */
 import EditCard from "@/components/EditCard";
 
 export default {

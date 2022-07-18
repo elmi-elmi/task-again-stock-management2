@@ -46,6 +46,13 @@
 </template>
 
 <script>
+/**
+ * this a table in ProductView
+ * showed all products which fetched from backend
+ *
+ *
+ * @author Shahrokh elmi
+ */
 import EditCard from "@/components/EditCard";
 import ReserveTable from "@/components/ReserveTable";
 import ChevronExpand from "@/components/ChevronExpand";

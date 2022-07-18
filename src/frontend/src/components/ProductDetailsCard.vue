@@ -14,6 +14,13 @@
 </template>
 
 <script>
+/**
+ * show all information about product
+ * name -stock - id and reservations
+ * this product added to top of the EditCard
+ *
+ * @author Shahrokh elmi
+ */
 import {mapState} from "vuex";
 
 export default {
