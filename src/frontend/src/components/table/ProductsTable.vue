@@ -54,8 +54,8 @@
  * @author Shahrokh elmi
  */
 import EditCard from "@/components/table/dialog/EditCard";
-import ReserveTable from "@/components/table/ReserveTable";
-import ChevronExpand from "@/components/table/ChevronExpand";
+import ReserveTable from "@/components/table/reserve/ReserveTable";
+import ChevronExpand from "@/components/table/reserve/ChevronExpand";
 import TopToolbarTable from "@/components/table/dialog/TopToolbarTable";
 
 export default {
