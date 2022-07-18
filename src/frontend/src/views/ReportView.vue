@@ -41,6 +41,12 @@
 </template>
 
 <script>
+/**
+ * Report View
+ * Record refills and decreases of stock
+ *
+ * @author Shahrokh elmi
+ */
 export default {
   name: "ReportView",
 

@@ -1,4 +1,10 @@
 
+/**
+ * Mutate report state here
+ *
+ * @author Shahrokh elmi
+ */
+
 export default  {
     // getProducts: state => state.products,
     ADD_REPORT(state, payload){

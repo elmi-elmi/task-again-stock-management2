@@ -1,18 +1,40 @@
 import ProductService from "@/services/ProductService";
 
+/**
+ * Actions
+ * every action on product or products in
+ * product modules implement here
+ *
+ * @author Shahrokh elmi
+ */
+
+
+
 export default {
     /*=======================================================
           REQUESTS TO BACKEND
        =======================================================*/
-
+    /**
+     * GET request from services
+     * fetch all products from backend
+     * then add response to products state
+     * @return promise contain response from backend
+     */
     fetchProducts({commit}) {
         return ProductService.getProducts()
             .then(({data}) => commit("ADD_PRODUCTS", data))
     },
 
-    /*
-     *  GET request --> to fetch product by ID
+
+    /**
+     * GET request from services
+     * fetch product by id
+     * then add response to product state
+     *
+     * @param productId id of product which selected to edit
+     * @return promise contain response from backend
      */
+
     fetchProductById({commit}, productId) {
         return ProductService.getProductById(productId)
             .then(({data}) => {
@@ -20,8 +42,13 @@ export default {
             });
     },
 
-    /*
-     *  GET request --> to fetch Stock by ID
+    /**
+     * GET request from services
+     * fetch stock of product
+     * then mutate product state
+     *
+     * @param stockId id of product
+     * @return promise contain response from backend
      */
     fetchStockById({commit}, stockId) {
         return ProductService.getStockById(stockId)
@@ -30,10 +57,16 @@ export default {
             );
     },
 
-    /*
-     *  PUT request --> to increase amount of a stock
+
+    /**
+     * PUT request from services
+     * increase stock of product
+     * then mutate product state
+     *
+     * @param id id of product which selected to edit
+     * @param amount the amount asked to increase
+     * @return promise contain response from backend
      */
-    // Todo -- Change to 2 separate functions
     addStockAmount(context, {id, amount}) {
         return ProductService.putRefillProduct(id, amount)
             .then(({data}) => {
@@ -45,8 +78,14 @@ export default {
             })
     },
 
-    /*
-     *  PUT request --> to decrease amount of a stock
+    /**
+     * PUT request from services
+     * decrease stock of product
+     * then mutate product state
+     *
+     * @param id id of product which selected to edit
+     * @param amount the amount asked to increase
+     * @return promise contain response from backend
      */
     decreaseStockAmount(context, {id, amount}) {
         return ProductService.putDecreaseProduct(id, amount)
@@ -60,7 +99,15 @@ export default {
 
 
     },
-
+    /**
+     * PUT request from services
+     * add reserve to product
+     * then mutate product state
+     *
+     * @param id id of product which selected to reserve
+     * @param amount the amount asked to reserve
+     * @return promise contain response from backend
+     */
 
     addReserveProduct({commit}, {id, amount}) {
         return ProductService.putReserveProduct(id, amount)
@@ -68,6 +115,15 @@ export default {
                 commit('SET_PRODUCT', data)
             })
     },
+
+    /**
+     * PATCH request from services
+     * update product information
+     * then mutate product in state
+     *
+     * @param product the product selected to update
+     * @return promise contain response from backend
+     */
 
     updateProduct({commit}, product) {
         return ProductService.patchProduct(product)

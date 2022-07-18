@@ -10,6 +10,11 @@
 <script>
 import Navbar from "@/components/Navbar";
 
+/**
+ * App.vue of Stock Management
+ *
+ * @author Shahrokh elmi
+ */
 export default {
   name: "app",
   components: {Navbar},
